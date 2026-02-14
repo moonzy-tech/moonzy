@@ -1,7 +1,7 @@
-export default function Home(){
+export default function QRPage(){
   return <>
   <div className="bg-black text-white h-screen">
-    <h1>Hello Moonzy!!</h1>
+    <h1>QR Page</h1>
   </div>
   </>
 }
