@@ -1,7 +1,9 @@
-export default function Home(){
-  return <>
-  <div className="bg-black text-white h-screen">
-    <h1>Hello Moonzy!!</h1>
-  </div>
-  </>
+import HeroSection from "../components/HeroSection";
+
+export default function Home() {
+  return (
+    <main className="">
+      <HeroSection />
+    </main>
+  );
 }
