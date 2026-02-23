@@ -18,12 +18,12 @@ export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navItems = [
     {
-      name: "Features",
-      link: "#features",
+      name: "About",
+      link: "#about-us-heading",
     },
     {
-      name: "Pricing",
-      link: "#pricing",
+      name: "Flavours",
+      link: "#product-range-heading",
     },
     {
       name: "Contact",
