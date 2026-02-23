@@ -98,13 +98,13 @@ export default function ProductRange() {
                   {product.description}
                 </p>
 
-                <div className="mt-5 flex flex-1 items-end justify-between gap-2">
+                <div className="mt-5 flex flex-1 items-end justify-between gap-3">
                   <div className="space-y-1 text-[0.65rem] uppercase tracking-[0.16em] text-white/70">
                     <p>Crunch Level: Loud</p>
                     <p>Shareability: Max</p>
                   </div>
 
-                  <div className="relative h-28 w-24 sm:h-32 sm:w-28 lg:h-36 lg:w-32">
+                  <div className="relative h-32 w-28 sm:h-36 sm:w-32 lg:h-40 lg:w-36">
                     <Image
                       src={product.image}
                       alt={product.name}
