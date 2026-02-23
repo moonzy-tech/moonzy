@@ -1,9 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
-const IMAGES = ["/1.png", "/2.png", "/3.png", "/4.png"];
+const COLORS = ["#20562B", "#DB6716", "#990E0F", "#E9E6C5"];
 const HERO_SCROLL_HEIGHT = 4; // number of "screens" to scroll through
 
 function lerp(start: number, end: number, t: number) {
@@ -33,11 +32,11 @@ export default function HeroSection() {
       style={{ height: `${HERO_SCROLL_HEIGHT * 100}vh` }}
       aria-label="Hero"
     >
-      {/* Sticky viewport-sized container so images stay fixed while we scroll */}
+      {/* Sticky viewport-sized container so screens stay fixed while we scroll */}
       <div className="sticky top-0 left-0 h-screen w-full overflow-hidden">
-        {IMAGES.map((src, i) => {
-          // Crossfade windows: each image fades in then out over scroll
-          const segment = 1 / IMAGES.length;
+        {COLORS.map((color, i) => {
+          // Crossfade: each screen fades in then out over scroll
+          const segment = 1 / COLORS.length;
           const fadeLen = 0.08;
           const inStart = i * segment - fadeLen;
           const inEnd = i * segment;
@@ -53,7 +52,7 @@ export default function HeroSection() {
             opacity = lerp(1, 0, (scrollProgress - outStart) / (outEnd - outStart));
           } else opacity = 0;
 
-          // Subtle scale: slight zoom as image is “active”
+          // Subtle scale: slight zoom as screen is “active”
           const active = scrollProgress >= inStart && scrollProgress <= outEnd;
           const fadeInT =
             active && scrollProgress <= inEnd
@@ -65,23 +64,17 @@ export default function HeroSection() {
 
           return (
             <div
-              key={src}
-              className="absolute inset-0"
+              key={color}
+              className="absolute inset-0 flex items-center justify-center"
               style={{
+                backgroundColor: color,
                 opacity,
                 transform: `scale(${scale})`,
                 transition: "opacity 0.15s ease-out, transform 0.15s ease-out",
               }}
             >
-              <Image
-                src={src}
-                alt=""
-                fill
-                sizes="100vw"
-                className="object-contain"
-                priority={i === 0}
-                quality={90}
-              />
+              {/* Add your respective component for this screen here */}
+              <div className="h-full w-full" />
             </div>
           );
         })}
