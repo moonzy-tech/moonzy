@@ -4,21 +4,21 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 
 const flavors = {
-    pudina: {
-      bg: "bg-pudina",
-      image: "/mint.svg",
-    },
     peri: {
       bg: "bg-peri",
-      image: "/Peri.svg",
+      image: "/Peri.png",
+    },
+        pudina: {
+      bg: "bg-pudina",
+      image: "/Mint.png",
     },
     caramel: {
       bg: "bg-caramel",
-      image: "/caramel.svg",
+      image: "/Caramel.png",
     },
   hing: {
     bg: "bg-hing",
-    image: "/hing.svg",
+    image: "/Hing.png",
   },
 } as const;
 
@@ -97,8 +97,8 @@ export default function Hero() {
                   <Image
                     src={flavors[key].image}
                     alt={`${key} chips`}
-                    width={560}
-                    height={760}
+                    width={588}
+                    height={798}
                     className="w-[320px] max-w-[88vw] sm:w-[340px] md:w-[380px] lg:w-[440px] xl:w-[500px]"
                   />
                 </div>

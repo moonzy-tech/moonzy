@@ -28,7 +28,7 @@
 
 body {
   font-family: "Berlin Sans", ui-sans-serif, system-ui, sans-serif;
-  background-color: #20562B; /* match first hero panel so no white strip below navbar */
+  background-color: #defee4; /* match first hero panel so no white strip below navbar */
 }
 
 @theme inline {
