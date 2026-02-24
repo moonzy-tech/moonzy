@@ -3,6 +3,7 @@ import Image from "next/image";
 export default function AboutUs() {
   return (
     <section
+      id="about"
       className="py-16 md:py-24"
       aria-labelledby="about-us-heading"
     >

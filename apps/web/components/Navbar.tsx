@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import { IconShoppingCart } from "@tabler/icons-react";
 import {
   Navbar as ResizableNavbar,
@@ -13,23 +14,35 @@ import {
   MobileNavToggle,
   MobileNavMenu,
 } from "@/components/ui/resizable-navbar";
+import { getCart, getCartCount, subscribeToCartChanges } from "@/lib/cart";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
   const navItems = [
     {
-      name: "Features",
-      link: "#features",
+      name: "Home",
+      link: "/",
     },
     {
-      name: "Pricing",
-      link: "#pricing",
+      name: "Flavours",
+      link: "#products",
     },
     {
-      name: "Contact",
-      link: "#contact",
+      name: "About Moonzy",
+      link: "#about",
+    },
+    {
+      name: "Movie Night Picks",
+      link: "/qr",
     },
   ];
+
+  useEffect(() => {
+    const sync = () => setCartCount(getCartCount(getCart()));
+    sync();
+    return subscribeToCartChanges(sync);
+  }, []);
 
   return (
     <div className="relative w-full">
@@ -40,13 +53,24 @@ export default function Navbar() {
           <NavItems items={navItems} />
           <div className="flex items-center gap-4">
             <NavbarButton
+              as={Link}
+              href="/cart"
               variant="primary"
               aria-label="Cart"
               className="rounded-lg border border-white/30 bg-white px-3 py-2 text-black hover:bg-white/80"
             >
-              <IconShoppingCart className="h-4 w-4" />
+              <span className="relative inline-flex">
+                <IconShoppingCart className="h-4 w-4" />
+                {cartCount > 0 && (
+                  <span className="absolute -right-2 -top-2 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[#1E3B2A] px-1 text-[0.65rem] font-bold leading-none text-white shadow-sm">
+                    {cartCount > 9 ? "9+" : cartCount}
+                  </span>
+                )}
+              </span>
             </NavbarButton>
-            <NavbarButton variant="primary">Login</NavbarButton>
+            <NavbarButton as={Link} href="/auth" variant="primary">
+              Login
+            </NavbarButton>
           </div>
         </NavBody>
 
@@ -76,14 +100,25 @@ export default function Navbar() {
             ))}
             <div className="flex w-full flex-col gap-4">
               <NavbarButton
+                as={Link}
+                href="/cart"
                 onClick={() => setIsMobileMenuOpen(false)}
                 variant="primary"
                 className="w-full"
                 aria-label="Cart"
               >
-                <IconShoppingCart className="mx-auto h-5 w-5" />
+                <span className="relative mx-auto inline-flex">
+                  <IconShoppingCart className="h-5 w-5" />
+                  {cartCount > 0 && (
+                    <span className="absolute -right-2 -top-2 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[#1E3B2A] px-1 text-[0.65rem] font-bold leading-none text-white shadow-sm">
+                      {cartCount > 9 ? "9+" : cartCount}
+                    </span>
+                  )}
+                </span>
               </NavbarButton>
               <NavbarButton
+                as={Link}
+                href="/auth"
                 onClick={() => setIsMobileMenuOpen(false)}
                 variant="primary"
                 className="w-full"

@@ -5,7 +5,7 @@ export default function Footer() {
         <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
           <div className="space-y-3 md:space-y-4">
             <p className="text-xs uppercase tracking-[0.35em] text-[#F2D9A2]">
-              Moonzy Munch
+              Moonzy
             </p>
             <h2 className="text-2xl font-bold leading-snug sm:text-3xl">
               Bold crunch. Big flavour.
@@ -42,7 +42,7 @@ export default function Footer() {
             <div className="flex flex-col gap-3 text-xs text-white/65 md:items-end md:text-right">
               <p>Made with extra crunch and extra character in India.</p>
               <p className="text-[0.65rem] text-white/45">
-                © {new Date().getFullYear()} Moonzy Munch. All rights reserved.
+                © {new Date().getFullYear()} Moonzy. All rights reserved.
               </p>
             </div>
           </div>

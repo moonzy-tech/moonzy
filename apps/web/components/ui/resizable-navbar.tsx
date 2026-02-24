@@ -1,9 +1,10 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { IconMenu2, IconX } from "@tabler/icons-react";
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "motion/react";
+import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "motion/react";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 
 interface NavbarProps {
@@ -46,13 +47,23 @@ interface MobileNavMenuProps {
 }
 
 export const Navbar = ({ children, className }: NavbarProps) => {
-  // Use global scroll so navbar reacts consistently with page scroll
-  const { scrollY } = useScroll();
+  const pathname = usePathname();
   const [compressed, setCompressed] = useState<boolean>(false);
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    setCompressed(latest > 10);
-  });
+  useEffect(() => {
+    // Trigger the compress animation on page open (and route changes),
+    // but do not tie it to scrolling.
+    setCompressed(false);
+    let raf1 = 0;
+    let raf2 = 0;
+    raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => setCompressed(true));
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, [pathname]);
 
   return (
     <motion.div
@@ -96,8 +107,7 @@ export const NavBody = ({ children, className, compressed }: NavBodyProps) => {
         minWidth: "800px",
       }}
       className={cn(
-        "relative z-[60] mx-auto hidden w-full max-w-7xl flex-row items-center justify-between self-start rounded-full bg-transparent px-4 py-2 lg:flex dark:bg-transparent",
-        compressed && "bg-white/80 dark:bg-neutral-950/80",
+        "relative z-60 mx-auto hidden w-full max-w-7xl flex-row items-center justify-between self-start rounded-full bg-white px-4 py-2 lg:flex",
         className,
       )}
     >
@@ -121,7 +131,6 @@ export const NavItems = ({
   items,
   className,
   onItemClick,
-  compressed,
 }: NavItemsProps) => {
   const [hovered, setHovered] = useState<number | null>(null);
 
@@ -130,9 +139,7 @@ export const NavItems = ({
       onMouseLeave={() => setHovered(null)}
       className={cn(
         "absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-2 text-sm font-medium transition duration-200 lg:flex lg:space-x-2",
-        compressed
-          ? "text-zinc-600 hover:text-zinc-800"
-          : "text-white hover:text-white/80",
+        "text-zinc-600 hover:text-zinc-800",
         className,
       )}
     >
@@ -142,9 +149,7 @@ export const NavItems = ({
           onClick={onItemClick}
           className={cn(
             "relative px-4 py-2",
-            compressed
-              ? "text-neutral-600 dark:text-neutral-300"
-              : "text-white dark:text-white",
+            "text-neutral-600",
           )}
           key={`link-${idx}`}
           href={item.link}
@@ -154,9 +159,7 @@ export const NavItems = ({
               layoutId="hovered"
               className={cn(
                 "absolute inset-0 h-full w-full rounded-full",
-                compressed
-                  ? "bg-gray-100 dark:bg-neutral-800"
-                  : "bg-white/20 dark:bg-white/10",
+                "bg-gray-100",
               )}
             />
           )}
@@ -191,8 +194,7 @@ export const MobileNav = ({
         damping: 50,
       }}
       className={cn(
-        "relative z-50 mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center justify-between bg-transparent px-0 py-2 lg:hidden",
-        compressed && "bg-white/80 dark:bg-neutral-950/80",
+        "relative z-50 mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center justify-between bg-white px-0 py-2 lg:hidden",
         className,
       )}
     >
@@ -221,7 +223,7 @@ export const MobileNavMenu = ({
   children,
   className,
   isOpen,
-  onClose,
+  onClose: _onClose,
 }: MobileNavMenuProps) => {
   return (
     <AnimatePresence>
@@ -231,7 +233,7 @@ export const MobileNavMenu = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className={cn(
-            "absolute inset-x-0 top-16 z-50 flex w-full flex-col items-start justify-start gap-4 rounded-lg bg-white px-4 py-8 shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] dark:bg-neutral-950",
+            "absolute inset-x-0 top-16 z-50 flex w-full flex-col items-start justify-start gap-4 rounded-lg bg-white px-4 py-8 shadow-[0_0_24px_rgba(34,42,53,0.06),0_1px_1px_rgba(0,0,0,0.05),0_0_0_1px_rgba(34,42,53,0.04),0_0_4px_rgba(34,42,53,0.08),0_16px_68px_rgba(47,48,55,0.05),0_1px_0_rgba(255,255,255,0.1)_inset] dark:bg-neutral-950",
             className,
           )}
         >
@@ -259,7 +261,7 @@ export const MobileNavToggle = ({
 export const NavbarLogo = () => {
   return (
     <a
-      href="#"
+      href="/"
       className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black"
     >
       <span className="font-semibold text-2xl font-berlin text-black dark:text-white">MOONZY</span>

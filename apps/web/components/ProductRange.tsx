@@ -46,6 +46,7 @@ const products = [
 export default function ProductRange() {
   return (
     <section
+      id="products"
       className="relative py-16 md:py-24"
       aria-labelledby="product-range-heading"
     >
