@@ -38,17 +38,23 @@ export function setSessionUserId(res: Response, userId: string): void {
   const exp = Date.now() + SESSION_MAX_AGE_MS;
   const payload = Buffer.from(JSON.stringify({ userId, exp }), "utf8").toString("base64url");
   const value = `${payload}.${sign(payload)}`;
+  const isProd = process.env["NODE_ENV"] === "production";
   res.cookie(SESSION_COOKIE, value, {
     httpOnly: true,
-    secure: process.env["NODE_ENV"] === "production",
-    sameSite: "lax",
+    secure: isProd,
+    sameSite: isProd ? "none" : "lax",
     maxAge: SESSION_MAX_AGE_MS,
     path: "/",
   });
 }
 
 export function clearSession(res: Response): void {
-  res.clearCookie(SESSION_COOKIE, { path: "/" });
+  const isProd = process.env["NODE_ENV"] === "production";
+  res.clearCookie(SESSION_COOKIE, {
+    path: "/",
+    secure: isProd,
+    sameSite: isProd ? "none" : "lax",
+  });
 }
 
 export async function loadSession(
