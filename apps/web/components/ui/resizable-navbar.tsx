@@ -1,6 +1,8 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { IconMenu2, IconX } from "@tabler/icons-react";
+import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -223,7 +225,6 @@ export const MobileNavMenu = ({
   children,
   className,
   isOpen,
-  onClose: _onClose,
 }: MobileNavMenuProps) => {
   return (
     <AnimatePresence>
@@ -260,12 +261,22 @@ export const MobileNavToggle = ({
 
 export const NavbarLogo = () => {
   return (
-    <a
+    <Link
       href="/"
-      className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black"
+      aria-label="Moonzy home"
+      className="relative z-20 mr-4 flex items-center px-2 py-1 text-sm font-normal text-black"
     >
-      <span className="font-semibold text-2xl font-berlin text-black dark:text-white">MOONZY</span>
-    </a>
+      <span className="relative block h-7 w-[150px] sm:h-8 sm:w-[170px]">
+        <Image
+          src="/logo.png"
+          alt="Moonzy"
+          fill
+          priority
+          sizes="(max-width: 640px) 150px, 170px"
+          className="object-contain"
+        />
+      </span>
+    </Link>
   );
 };
 

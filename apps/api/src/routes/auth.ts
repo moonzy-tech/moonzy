@@ -3,6 +3,7 @@ import {
   verifyGoogleIdToken,
   exchangeCodeForPayload,
   findOrCreateUser,
+  findOrCreateAdminByEmail,
 } from "../services/auth.service.js";
 import { setSessionUserId, clearSession } from "../middleware/session.js";
 import type { AuthRequest } from "../middleware/auth.js";
@@ -30,6 +31,37 @@ authRouter.post("/google", async (req, res) => {
     res.status(500).json({ error: "Could not create user" });
     return;
   }
+  setSessionUserId(res, String(user._id));
+  res.json({
+    user: {
+      _id: user._id,
+      email: user.email,
+      name: user.name,
+      picture: user.picture,
+      role: user.role,
+    },
+  });
+});
+
+authRouter.post("/admin-login", async (req, res) => {
+  const email =
+    typeof req.body?.email === "string" ? req.body.email.toLowerCase().trim() : null;
+  const password = typeof req.body?.password === "string" ? req.body.password : null;
+
+  const expectedEmail = (process.env["ADMIN_EMAIL"] ?? "admin@moonzy.com").toLowerCase();
+  const expectedPassword = process.env["ADMIN_PASSWORD"] ?? "admin123";
+
+  if (!email || !password || email !== expectedEmail || password !== expectedPassword) {
+    res.status(401).json({ error: "Invalid admin credentials" });
+    return;
+  }
+
+  const user = await findOrCreateAdminByEmail(expectedEmail);
+  if (!user) {
+    res.status(500).json({ error: "Could not create admin user" });
+    return;
+  }
+
   setSessionUserId(res, String(user._id));
   res.json({
     user: {

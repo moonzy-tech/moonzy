@@ -4,18 +4,21 @@ import { GoogleLogin } from "@react-oauth/google";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
+import { api, type User } from "@/lib/api";
+import { useAuth } from "@/lib/auth";
 
 export default function AuthPage() {
   const router = useRouter();
   const googleClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
   const [error, setError] = useState<string | null>(null);
+  const { refresh } = useAuth();
 
   const missingClientId = useMemo(() => !googleClientId, [googleClientId]);
 
   return (
     <main className="min-h-screen bg-[#FDF5E5] pt-28 pb-20 text-[#13241A]">
       <section className="mx-auto max-w-6xl px-6 lg:px-10">
-        <div className="mx-auto max-w-lg rounded-3xl bg-white/90 p-6 shadow-[0_22px_60px_rgba(0,0,0,0.08)] md:p-8">
+        <div className="mx-auto max-w-lg rounded-3xl bg:white/90 p-6 shadow-[0_22px_60px_rgba(0,0,0,0.08)] md:p-8">
           <p className="text-xs uppercase tracking-[0.3em] text-[#A45715] md:text-sm">
             Moonzy
           </p>
@@ -40,18 +43,31 @@ export default function AuthPage() {
             ) : (
               <div className="flex justify-center rounded-2xl border border-[#E1D4C1] bg-white p-4">
                 <GoogleLogin
-                  onSuccess={(credentialResponse) => {
+                  onSuccess={async (credentialResponse) => {
                     setError(null);
                     if (!credentialResponse.credential) {
                       setError("Google sign-in did not return a credential.");
                       return;
                     }
 
-                    // For now we just confirm sign-in worked and redirect.
-                    // Hook this up to your backend to create a real session.
-                    router.push("/");
+                    try {
+                      await api<{ user: User }>("/auth/google", {
+                        method: "POST",
+                        body: { idToken: credentialResponse.credential },
+                      });
+                      await refresh();
+                      router.push("/");
+                    } catch (e) {
+                      setError(
+                        e instanceof Error
+                          ? e.message
+                          : "Unable to sign in with Google. Please try again.",
+                      );
+                    }
                   }}
-                  onError={() => setError("Google sign-in failed. Please try again.")}
+                  onError={() =>
+                    setError("Google sign-in failed. Please try again.")
+                  }
                   useOneTap={false}
                   theme="outline"
                   size="large"
@@ -84,4 +100,3 @@ export default function AuthPage() {
     </main>
   );
 }
-

@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { api, type User } from "@/lib/api";
 
 const nav = [
   { href: "/", label: "Dashboard" },
@@ -15,6 +17,42 @@ export default function DashboardLayout({
   children,
 }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
+  const [checking, setChecking] = useState(true);
+  const [authorized, setAuthorized] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function checkAuth() {
+      try {
+        const res = await api<{ user: User | null }>("/auth/me");
+        if (cancelled) return;
+        if (!res.user || res.user.role !== "admin") {
+          router.replace("/login");
+          return;
+        }
+        setAuthorized(true);
+      } catch {
+        if (!cancelled) {
+          router.replace("/login");
+        }
+      } finally {
+        if (!cancelled) setChecking(false);
+      }
+    }
+    void checkAuth();
+    return () => {
+      cancelled = true;
+    };
+  }, [router]);
+
+  if (checking || !authorized) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-100">
+        <p className="text-slate-600 text-sm">Checking admin access…</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex bg-slate-100">

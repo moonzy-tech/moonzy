@@ -9,10 +9,14 @@ import {
   updateCartItemQuantity,
 } from "@/lib/cart";
 import { products } from "@/lib/products";
+import { useAuth } from "@/lib/auth";
+import { api } from "@/lib/api";
+import { fetchProfile } from "@/lib/profile";
 import { IconTrash } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 
 type CartViewItem = {
   productId: string;
@@ -23,8 +27,14 @@ type CartViewItem = {
   price: number;
 };
 
+const WHATSAPP_NUMBER = "918390255117"; // Replace with your business WhatsApp number
+const LAST_ORDER_KEY = "moonzy_last_whatsapp_order_v1";
+
 export default function CartPage() {
+  const router = useRouter();
   const [cart, setCart] = useState(() => getCart());
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
+  const { user, loading: authLoading } = useAuth();
 
   useEffect(() => {
     const sync = () => setCart(getCart());
@@ -59,6 +69,112 @@ export default function CartPage() {
   );
 
   const isEmpty = items.length === 0;
+  const MIN_PACKS = 5;
+  const meetsMinimum = totalItems >= MIN_PACKS;
+  const packsRemaining = Math.max(MIN_PACKS - totalItems, 0);
+
+  async function handleCheckout() {
+    if (!meetsMinimum || isEmpty || checkoutLoading) return;
+    if (authLoading) return;
+
+    // Require login
+    if (!user) {
+      if (typeof window !== "undefined") {
+        window.location.href = "/auth";
+      }
+      return;
+    }
+
+    setCheckoutLoading(true);
+    try {
+      const profile = await fetchProfile();
+
+      // Require completed default shipping address
+      if (!profile.defaultShippingAddress) {
+        if (typeof window !== "undefined") {
+          window.location.href = "/profile";
+        }
+        return;
+      }
+
+      const addressParts = [
+        profile.defaultShippingAddress?.addressLine1,
+        profile.defaultShippingAddress?.addressLine2,
+        profile.defaultShippingAddress?.city,
+        profile.defaultShippingAddress?.state,
+        profile.defaultShippingAddress?.pincode,
+        profile.defaultShippingAddress?.country,
+      ].filter(Boolean);
+
+      const itemsText = items
+        .map((item) => `- ${item.name} x ${item.quantity}`)
+        .join("\n");
+
+      const message = [
+        "New Moonzy order",
+        "",
+        "Items:",
+        itemsText,
+        "",
+        `Total: ₹${subtotal}`,
+        "",
+        "Customer details:",
+        `Name: ${profile.defaultShippingAddress?.name ?? profile.name ?? ""}`,
+        `Phone: ${profile.defaultShippingAddress?.phone ?? ""}`,
+        `Email: ${profile.email}`,
+        addressParts.length ? `Address: ${addressParts.join(", ")}` : "",
+      ]
+        .filter((line) => line.trim().length > 0)
+        .join("\n");
+
+      // Create order in backend (in paise)
+      try {
+        await api("/orders", {
+          method: "POST",
+          body: {
+            items: items.map((item) => ({
+              productId: item.productId,
+              quantity: item.quantity,
+            })),
+            shippingAddress: profile.defaultShippingAddress,
+          },
+        });
+      } catch {
+        // Non-blocking: even if order creation fails, continue to WhatsApp
+      }
+
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+        message,
+      )}`;
+
+      if (typeof window !== "undefined") {
+        try {
+          window.localStorage.setItem(
+            LAST_ORDER_KEY,
+            JSON.stringify({
+              createdAt: new Date().toISOString(),
+              items: items.map((item) => ({
+                name: item.name,
+                quantity: item.quantity,
+                price: item.price,
+              })),
+              subtotal,
+            }),
+          );
+        } catch {
+          // ignore storage errors
+        }
+        window.open(url, "_blank");
+      }
+
+      // Clear cart after handing off order to WhatsApp
+      clearCart();
+
+      router.push("/orders/whatsapp");
+    } finally {
+      setCheckoutLoading(false);
+    }
+  }
 
   return (
     <>
@@ -73,7 +189,7 @@ export default function CartPage() {
             </h1>
             <p className="mt-3 text-sm leading-relaxed text-[#4C4A3F] sm:text-base">
               Review your packs, tweak quantities, then checkout when you&apos;re
-              ready.
+              ready. Minimum order is {MIN_PACKS} packs.
             </p>
           </div>
 
@@ -93,13 +209,13 @@ export default function CartPage() {
               <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:justify-center">
                 <Link
                   href="/product"
-                  className="inline-flex items-center justify-center rounded-full bg-[#1E3B2A] px-7 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-white shadow-[0_14px_35px_rgba(0,0,0,0.3)] transition hover:-translate-y-0.5 hover:shadow-[0_20px_55px_rgba(0,0,0,0.4)]"
+                  className="inline-flex items-center justify-center rounded-full bg-[#1E3B2A] px-7 py-2 text-[0.7rem] uppercase tracking-[0.22em] text-white shadow-[0_14px_35px_rgba(0,0,0,0.3)] transition hover:-translate-y-0.5 hover:shadow-[0_20px_55px_rgba(0,0,0,0.4)]"
                 >
                   Shop flavours
                 </Link>
                 <Link
                   href="/"
-                  className="inline-flex items-center justify-center rounded-full border border-[#1E3B2A] px-7 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-[#1E3B2A] transition hover:-translate-y-0.5 hover:bg-[#1E3B2A] hover:text-white"
+                  className="inline-flex items-center justify-center rounded-full border border-[#1E3B2A] px-7 py-2 text-[0.7rem] uppercase tracking-[0.22em] text-[#1E3B2A] transition hover:-translate-y-0.5 hover:bg-[#1E3B2A] hover:text-white"
                 >
                   Back home
                 </Link>
@@ -109,7 +225,7 @@ export default function CartPage() {
             <div className="grid gap-8 lg:grid-cols-[1.2fr_minmax(0,1fr)]">
               <div className="space-y-5">
                 <div className="flex items-center justify-between rounded-3xl bg-white/90 px-5 py-4 shadow-[0_18px_45px_rgba(0,0,0,0.08)]">
-                  <p className="text-sm font-semibold text-[#1E3B2A]">
+                  <p className="text-sm font-sans font-semibold text-[#1E3B2A]">
                     {totalItems} pack{totalItems > 1 ? "s" : ""} in cart
                   </p>
                   <button
@@ -155,7 +271,7 @@ export default function CartPage() {
                         </div>
 
                         <div className="flex flex-col gap-3 sm:items-end">
-                          <p className="text-sm font-semibold text-[#1E3B2A]">
+                          <p className="text-sm text-[#1E3B2A]">
                             ₹{item.price * item.quantity}
                           </p>
                           <div className="flex flex-wrap items-center gap-3">
@@ -173,7 +289,7 @@ export default function CartPage() {
                               >
                                 −
                               </button>
-                              <span className="mx-3 min-w-[2ch] text-center text-sm font-semibold">
+                              <span className="mx-3 min-w-[2ch] text-center text-sm">
                                 {item.quantity}
                               </span>
                               <button
@@ -222,13 +338,13 @@ export default function CartPage() {
                 <div className="mt-6 space-y-3 rounded-2xl bg-white/10 p-4 text-sm text-white/80">
                   <div className="flex items-center justify-between">
                     <span className="text-white/70">Packs</span>
-                    <span className="font-semibold text-white">
+                    <span className="text-white">
                       {totalItems}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-white/70">Subtotal</span>
-                    <span className="font-semibold text-white">
+                    <span className="text-white">
                       ₹{subtotal}
                     </span>
                   </div>
@@ -239,18 +355,28 @@ export default function CartPage() {
                       ₹{subtotal}
                     </span>
                   </div>
+                  {!meetsMinimum && (
+                    <p className="mt-2 text-xs text-[#F2D9A2]">
+                      Minimum order is {MIN_PACKS} packs. Add {packsRemaining} more
+                      pack{packsRemaining > 1 ? "s" : ""} to checkout.
+                    </p>
+                  )}
                 </div>
 
                 <div className="mt-6 space-y-3">
-                  <a
-                    href="#contact"
-                    className="inline-flex w-full items-center justify-center rounded-full bg-[#F2D9A2] px-6 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.25em] text-[#1E3B2A] shadow-lg shadow-black/30 transition hover:-translate-y-0.5 hover:shadow-xl"
-                  >
-                    Checkout (soon)
-                  </a>
+                  {meetsMinimum && (
+                    <button
+                      type="button"
+                      onClick={handleCheckout}
+                      disabled={checkoutLoading}
+                      className="inline-flex w-full items-center justify-center rounded-full bg-[#F2D9A2] px-6 py-2 text-[0.7rem] uppercase tracking-[0.25em] text-[#1E3B2A] shadow-lg shadow-black/30 transition hover:-translate-y-0.5 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-70"
+                    >
+                      {checkoutLoading ? "Opening WhatsApp…" : "Checkout via WhatsApp"}
+                    </button>
+                  )}
                   <Link
                     href="/product"
-                    className="inline-flex w-full items-center justify-center rounded-full border border-white/30 bg-transparent px-6 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-white transition hover:-translate-y-0.5 hover:bg-white hover:text-[#0B1811]"
+                    className="inline-flex w-full items-center justify-center rounded-full border border-white/30 bg-transparent px-6 py-2 text-[0.7rem] uppercase tracking-[0.22em] text-white transition hover:-translate-y-0.5 hover:bg-white hover:text-[#0B1811]"
                   >
                     Add more packs
                   </Link>

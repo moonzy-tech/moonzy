@@ -69,3 +69,22 @@ export async function findOrCreateUser(payload: GoogleTokenPayload): Promise<IUs
   ).exec();
   return doc as IUserDocument | null;
 }
+
+export async function findOrCreateAdminByEmail(email: string): Promise<IUserDocument | null> {
+  const normalized = email.toLowerCase();
+  const doc = await User.findOneAndUpdate(
+    { email: normalized },
+    {
+      $set: {
+        email: normalized,
+        role: "admin",
+        updatedAt: new Date(),
+      },
+      $setOnInsert: {
+        name: "Moonzy Admin",
+      },
+    },
+    { new: true, upsert: true, setDefaultsOnInsert: true },
+  ).exec();
+  return doc as IUserDocument | null;
+}

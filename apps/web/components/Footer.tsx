@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer id="contact" className="mt-16 bg-[#0B1811] text-white">
+    <footer id="contact" className="bg-[#0B1811] text-white">
       <div className="mx-auto max-w-6xl px-6 py-10 lg:px-10 lg:py-12">
         <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
           <div className="space-y-3 md:space-y-4">
@@ -21,7 +21,7 @@ export default function Footer() {
             <div className="flex flex-wrap gap-3 md:justify-end">
               <a
                 href="#about-us-heading"
-                className="rounded-full border border-white/30 px-4 py-1.5 text-[0.7rem] uppercase tracking-[0.2em] text-white/90 transition hover:-translate-y-0.5 hover:border-white hover:bg-white/10"
+                className="rounded-full bg-[#F2D9A2] px-5 py-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.25em] text-[#1E3B2A] shadow-lg shadow-black/30 transition hover:-translate-y-0.5 hover:shadow-xl"
               >
                 About
               </a>
@@ -31,15 +31,14 @@ export default function Footer() {
               >
                 Flavours
               </a>
-              <button
-                type="button"
-                className="rounded-full bg-[#F2D9A2] px-5 py-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.25em] text-[#1E3B2A] shadow-lg shadow-black/30 transition hover:-translate-y-0.5 hover:shadow-xl"
-              >
-                Stay Updated
-              </button>
             </div>
 
             <div className="flex flex-col gap-3 text-xs text-white/65 md:items-end md:text-right">
+              <div className="space-y-1">
+                <p className="font-medium text-white">Contact</p>
+                <p>Email: <a href="mailto:bemoonzy@gmail.com" className="underline underline-offset-2 hover:text-white">bemoonzy@gmail.com</a></p>
+                <p>Phone: <a href="tel:+918390255117" className="underline underline-offset-2 hover:text-white">+91 83902 55117</a></p>
+              </div>
               <p>Made with extra crunch and extra character in India.</p>
               <p className="text-[0.65rem] text-white/45">
                 © {new Date().getFullYear()} Moonzy. All rights reserved.

@@ -8,6 +8,7 @@ import { productsRouter } from "./routes/products.js";
 import { ordersRouter } from "./routes/orders.js";
 import { paymentsRouter, handleRazorpayWebhook } from "./routes/payments.js";
 import { adminRouter } from "./routes/admin/index.js";
+import { profileRouter } from "./routes/profile.js";
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.use(loadSession);
 
 app.use("/health", healthRouter);
 app.use("/auth", authRouter);
+app.use("/profile", profileRouter);
 app.use("/products", productsRouter);
 app.use("/orders", ordersRouter);
 app.use("/payments", paymentsRouter);

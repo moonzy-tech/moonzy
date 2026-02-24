@@ -10,7 +10,9 @@
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "build": "tsc",
+    "seed:products": "npm run build && node dist/scripts/seedProducts.js"
   },
   "dependencies": {
     "mongoose": "^8.8.4"

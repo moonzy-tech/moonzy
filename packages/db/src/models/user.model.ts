@@ -1,4 +1,6 @@
 import mongoose, { Schema, type Document, type Model } from "mongoose";
+import type { IAddress } from "./address.model.js";
+import { addressSchema } from "./address.model.js";
 
 export type UserRole = "user" | "admin";
 
@@ -8,6 +10,7 @@ export interface IUser {
   picture?: string;
   googleId?: string;
   role: UserRole;
+   defaultShippingAddress?: IAddress;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -32,6 +35,10 @@ const userSchema = new Schema<IUserDocument>(
       type: String,
       enum: ["user", "admin"],
       default: "user",
+    },
+    defaultShippingAddress: {
+      type: addressSchema,
+      required: false,
     },
   },
   {

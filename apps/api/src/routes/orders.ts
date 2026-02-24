@@ -16,12 +16,13 @@ ordersRouter.post("/", requireAuth, async (req: AuthRequest, res) => {
     res.status(400).json({ error: "items and shippingAddress required" });
     return;
   }
-  const productIds = body.items.map((i) => i.productId);
+  // Frontend sends logical product IDs like "peri", "pudina" which correspond to product slugs
+  const productSlugs = body.items.map((i) => i.productId);
   const products = await Product.find({
-    _id: { $in: productIds },
+    slug: { $in: productSlugs },
     isActive: true,
   }).lean();
-  const productMap = new Map(products.map((p) => [String(p._id), p]));
+  const productMap = new Map(products.map((p) => [p.slug, p]));
 
   const orderItems: Array<{ productId: typeof products[0]["_id"]; name: string; sku?: string; quantity: number; price: number }> = [];
   let subtotal = 0;

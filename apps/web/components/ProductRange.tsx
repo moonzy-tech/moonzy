@@ -1,9 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const products = [
   {
     id: "peri",
-    name: "Sizzlin’ Peri Peri",
+    name: "Peri Peri Chips",
     tag: "Fiery & Bold",
     description:
       "Turn up the heat with a punchy chilli kick and smoky notes in every crisp.",
@@ -13,7 +14,7 @@ const products = [
   },
   {
     id: "pudina",
-    name: "Cool Pudina Pop",
+    name: "Pudina Mint Chips",
     tag: "Fresh & Zesty",
     description:
       "Cool mint, herby vibes and a light crunch that keeps things refreshingly snappy.",
@@ -23,7 +24,7 @@ const products = [
   },
   {
     id: "caramel",
-    name: "Buttery Caramel Crunch",
+    name: "Caramel Chips",
     tag: "Sweet & Comforting",
     description:
       "Warm caramel, buttery notes and a mellow sweetness made for slow-snack moments.",
@@ -33,7 +34,7 @@ const products = [
   },
   {
     id: "hing",
-    name: "Masala Hing Burst",
+    name: "Hing Chutney Chips",
     tag: "Iconic & Desi",
     description:
       "Nostalgic street-style masala with big hing character and a seriously loud crunch.",
@@ -71,52 +72,53 @@ export default function ProductRange() {
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {products.map((product, index) => (
-            <article
+            <Link
               key={product.id}
-              className="group relative overflow-hidden rounded-3xl border border-white/40 bg-[#0E1913]/95 p-4 pt-5 shadow-[0_18px_45px_rgba(0,0,0,0.55)] transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_24px_60px_rgba(0,0,0,0.7)] animate-in fade-in-10 slide-in-from-bottom-8"
-              style={{ animationDelay: `${index * 80}ms` }}
+              href={`/product?flavor=${product.id}`}
+              aria-label={`View ${product.name}`}
+              className="group"
             >
-              <div
-                className={`pointer-events-none absolute inset-0 opacity-50 mix-blend-screen ${product.bgClass}`}
-              />
+              <article
+                className="relative overflow-hidden rounded-3xl border border-white/40 bg-[#0E1913]/95 p-4 pt-5 shadow-[0_18px_45px_rgba(0,0,0,0.55)] transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_24px_60px_rgba(0,0,0,0.7)] animate-in fade-in-10 slide-in-from-bottom-8"
+                style={{ animationDelay: `${index * 80}ms` }}
+              >
+                <div
+                  className={`pointer-events-none absolute inset-0 opacity-50 mix-blend-screen ${product.bgClass}`}
+                />
 
-              <div className="relative z-10 flex flex-col">
-                <span
-                  className="mb-3 inline-flex w-fit items-center rounded-full px-3 py-1 text-[0.65rem] font-sans font-bold uppercase tracking-[0.2em]"
-                  style={{
-                    backgroundColor: `${product.accent}E6`,
-                    color: "#20562B",
-                  }}
-                >
-                  {product.tag}
-                </span>
+                <div className="relative z-10 flex flex-col">
+                  <span
+                    className="mb-3 inline-flex w-fit items-center rounded-full px-3 py-1 text-[0.65rem] font-sans font-bold uppercase tracking-[0.2em]"
+                    style={{
+                      backgroundColor: `${product.accent}E6`,
+                      color: "#20562B",
+                    }}
+                  >
+                    {product.tag}
+                  </span>
 
-                <h3 className="text-base font-bold font-sans leading-snug text-white sm:text-lg">
-                  {product.name}
-                </h3>
+                  <h3 className="text-base font-bold font-sans leading-snug text-white sm:text-lg">
+                    {product.name}
+                  </h3>
 
-                <p className="mt-2 text-xs leading-relaxed text-white/85 sm:text-sm">
-                  {product.description}
-                </p>
+                  <p className="mt-2 text-xs max-w-32 leading-relaxed text-white/85 sm:text-sm">
+                    {product.description}
+                  </p>
 
-                <div className="mt-5 flex flex-1 items-end justify-between gap-3">
-                  <div className="space-y-1 text-[0.65rem] uppercase tracking-[0.16em] text-white/70">
-                    <p>Crunch Level: Loud</p>
-                    <p>Shareability: Max</p>
-                  </div>
-
-                  <div className="relative h-32 w-28 sm:h-36 sm:w-32 lg:h-40 lg:w-36">
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      fill
-                      sizes="(min-width: 1024px) 8rem, (min-width: 640px) 7rem, 6rem"
-                      className="object-contain drop-shadow-[0_18px_40px_rgba(0,0,0,0.7)] transition-transform duration-500 group-hover:-translate-y-1.5 group-hover:rotate-[-7deg] group-hover:scale-[1.04]"
-                    />
+                  <div className="mt-5 flex flex-1 justify-center">
+                    <div className="relative h-32 w-28 sm:h-36 sm:w-32 lg:h-60 lg:w-48">
+                      <Image
+                        src={product.image}
+                        alt={product.name}
+                        fill
+                        sizes="(min-width: 1024px) 8rem, (min-width: 640px) 7rem, 6rem"
+                        className="object-contain drop-shadow-[0_18px_40px_rgba(0,0,0,0.7)] transition-transform duration-500 group-hover:-translate-y-1.5 group-hover:rotate-[-7deg] group-hover:scale-[1.04]"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-            </article>
+              </article>
+            </Link>
           ))}
         </div>
       </div>
