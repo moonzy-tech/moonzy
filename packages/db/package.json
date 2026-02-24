@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts",
-    "./connection": "./src/connection.ts",
-    "./models": "./src/models/index.ts"
+    ".": "./dist/index.js",
+    "./connection": "./dist/connection.js",
+    "./models": "./dist/models/index.js"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
