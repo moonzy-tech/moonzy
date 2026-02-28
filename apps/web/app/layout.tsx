@@ -37,7 +37,7 @@ export default function RootLayout({
           {children}
         </Providers>
       </body>
-      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID!} />
+      <GoogleAnalytics gaId="G-XRGRZLPSEK" />
     </html>
   );
 }
