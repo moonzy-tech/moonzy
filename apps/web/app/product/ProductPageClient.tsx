@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { addToCart } from "@/lib/cart";
 import { products, type ProductId } from "@/lib/products";
+import { useToast } from "@/components/Toast";
 
 export default function ProductPageClient() {
   const searchParams = useSearchParams();
@@ -16,17 +17,16 @@ export default function ProductPageClient() {
 
   const [activeId, setActiveId] = useState<ProductId>(initialId);
   const [quantity, setQuantity] = useState(1);
-  const [addedMessage, setAddedMessage] = useState<string | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { showToast } = useToast();
 
   const activeProduct = products.find((p) => p.id === activeId) ?? products[0];
 
   const handleAddToCart = () => {
     addToCart(activeProduct.id, quantity);
-    setAddedMessage(
-      `Added ${quantity} pack${quantity > 1 ? "s" : ""} of ${activeProduct.name} to cart`,
+    showToast(
+      `Added ${quantity} pack${quantity > 1 ? "s" : ""} of ${activeProduct.name} to cart 🎉`,
     );
-    setTimeout(() => setAddedMessage(null), 2200);
   };
 
   return (
@@ -193,11 +193,6 @@ export default function ProductPageClient() {
                 </Link>
               </div>
 
-              {addedMessage && (
-                <p className="mt-3 text-xs font-medium text-[#A45715]">
-                  {addedMessage}
-                </p>
-              )}
             </div>
           </div>
         </div>

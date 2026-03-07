@@ -76,37 +76,42 @@ export default function ProductRange() {
               key={product.id}
               href={`/product?flavor=${product.id}`}
               aria-label={`View ${product.name}`}
-              className="group"
+              className="group h-full"
             >
               <article
-                className="relative overflow-hidden rounded-3xl border border-white/40 bg-[#0E1913]/95 p-4 pt-5 shadow-[0_18px_45px_rgba(0,0,0,0.55)] transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_24px_60px_rgba(0,0,0,0.7)] animate-in fade-in-10 slide-in-from-bottom-8"
+                className="relative h-full overflow-hidden rounded-3xl border border-white/40 bg-[#0E1913]/95 p-4 pt-5 shadow-[0_18px_45px_rgba(0,0,0,0.55)] transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_24px_60px_rgba(0,0,0,0.7)] animate-in fade-in-10 slide-in-from-bottom-8"
                 style={{ animationDelay: `${index * 80}ms` }}
               >
                 <div
                   className={`pointer-events-none absolute inset-0 opacity-50 mix-blend-screen ${product.bgClass}`}
                 />
 
-                <div className="relative z-10 flex flex-col">
-                  <span
-                    className="mb-3 inline-flex w-fit items-center rounded-full px-3 py-1 text-[0.65rem] font-sans font-bold uppercase tracking-[0.2em]"
-                    style={{
-                      backgroundColor: `${product.accent}E6`,
-                      color: "#20562B",
-                    }}
-                  >
-                    {product.tag}
-                  </span>
+                {/* Mobile: horizontal layout | sm+: vertical layout */}
+                <div className="relative z-10 flex h-full flex-row items-center gap-2 sm:flex-col sm:items-start sm:gap-0">
+                  {/* Text content */}
+                  <div className="flex flex-1 flex-col">
+                    <span
+                      className="mb-2 inline-flex w-fit items-center rounded-full px-3 py-1 text-[0.6rem] font-sans font-bold uppercase tracking-[0.18em] sm:mb-3 sm:text-[0.65rem] sm:tracking-[0.2em]"
+                      style={{
+                        backgroundColor: `${product.accent}E6`,
+                        color: "#20562B",
+                      }}
+                    >
+                      {product.tag}
+                    </span>
 
-                  <h3 className="text-base font-bold font-sans leading-snug text-white sm:text-lg">
-                    {product.name}
-                  </h3>
+                    <h3 className="text-lg font-bold font-sans leading-snug text-white sm:text-lg">
+                      {product.name}
+                    </h3>
 
-                  <p className="mt-2 text-xs max-w-32 leading-relaxed text-white/85 sm:text-sm">
-                    {product.description}
-                  </p>
+                    <p className="mt-1.5 text-xs leading-relaxed text-white/85 sm:mt-2 sm:max-w-40 sm:text-sm">
+                      {product.description}
+                    </p>
+                  </div>
 
-                  <div className="mt-5 flex flex-1 justify-center">
-                    <div className="relative h-32 w-28 sm:h-36 sm:w-32 lg:h-60 lg:w-48">
+                  {/* Product image */}
+                  <div className="flex shrink-0 items-center justify-center sm:mt-auto sm:w-full sm:pt-5">
+                    <div className="relative h-40 w-36 sm:mx-auto sm:h-36 sm:w-32 lg:h-60 lg:w-48">
                       <Image
                         src={product.image}
                         alt={product.name}

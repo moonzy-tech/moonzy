@@ -137,10 +137,28 @@ export default function Navbar() {
         <MobileNav>
           <MobileNavHeader>
             <NavbarLogo />
-            <MobileNavToggle
-              isOpen={isMobileMenuOpen}
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            />
+            <div className="flex items-center gap-3">
+              <NavbarButton
+                as={Link}
+                href="/cart"
+                variant="primary"
+                aria-label="Cart"
+                className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-black/5 bg-white/95 p-0 text-[#1E3B2A] shadow-[0_8px_20px_rgba(0,0,0,0.1)] transition hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_12px_30px_rgba(0,0,0,0.15)]"
+              >
+                <span className="relative inline-flex items-center justify-center">
+                  <IconShoppingCart className="h-[18px] w-[18px]" />
+                  {cartCount > 0 && (
+                    <span className="absolute -right-1.5 -top-1.5 inline-flex h-4 min-w-4 items-center justify-center rounded-full border-2 border-white bg-[#1E3B2A] px-0.5 text-[0.6rem] leading-none text-white shadow-sm">
+                      {cartCount > 9 ? "9+" : cartCount}
+                    </span>
+                  )}
+                </span>
+              </NavbarButton>
+              <MobileNavToggle
+                isOpen={isMobileMenuOpen}
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              />
+            </div>
           </MobileNavHeader>
 
           <MobileNavMenu
@@ -158,23 +176,6 @@ export default function Navbar() {
               </a>
             ))}
             <div className="flex w-full flex-col gap-4">
-              <NavbarButton
-                as={Link}
-                href="/cart"
-                onClick={() => setIsMobileMenuOpen(false)}
-                variant="primary"
-                className="relative flex w-full items-center justify-center rounded-2xl border border-black/5 bg-white/95 py-2 text-[#1E3B2A] shadow-[0_12px_30px_rgba(0,0,0,0.12)] transition hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_18px_45px_rgba(0,0,0,0.18)]"
-                aria-label="Cart"
-              >
-                <span className="relative mx-auto inline-flex items-center justify-center">
-                  <IconShoppingCart className="h-5 w-5" />
-                  {cartCount > 0 && (
-                    <span className="absolute -right-1.5 -top-1.5 inline-flex h-5 min-w-5 items-center justify-center rounded-full border-2 border-white bg-[#1E3B2A] px-1 text-[0.65rem] font-semibold leading-none text-white shadow-sm">
-                      {cartCount > 9 ? "9+" : cartCount}
-                    </span>
-                  )}
-                </span>
-              </NavbarButton>
               {!loading && !user && (
                 <NavbarButton
                   as={Link}
