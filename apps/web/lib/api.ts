@@ -1,4 +1,4 @@
-const getBase = () => process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
+const getBase = () => "/api-proxy";
 
 type ApiOptions = Omit<RequestInit, "body"> & { body?: unknown };
 
