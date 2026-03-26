@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import Navbar from "../components/Navbar";
 import { Providers } from "./providers";
 import "./globals.css";
 
@@ -16,9 +15,9 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Moonzy Snacks – Crunchy Millet Chips",
+  title: "Moonzy - Made for Nights",
   description:
-    "Discover Moonzy’s bold snack lineup – peri peri, pudina, caramel and hing chips with big flavour and even bigger crunch.",
+    "You’re awake. You’re hungry. It’s not a problem. It’s your time. The night had everything. Except one thing. A snack built for it.",
   icons: {
     icon: "/monnzy.png",
   },
@@ -31,9 +30,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} font-berlin`}>
         <Providers>
-          <Navbar />
           {children}
         </Providers>
       </body>
