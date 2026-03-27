@@ -141,32 +141,32 @@ export default function FeaturesSection() {
   return (
     <section className="bg-[#141826] py-8 md:py-10 lg:py-12 px-4 md:px-6">
       <div
-        className="max-w-[1440px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 lg:gap-[20px] px-4 md:px-6"
+        className="max-w-[1440px] mx-auto grid grid-cols-2 lg:grid-cols-4 gap-3 gap-y-4 md:gap-5 lg:gap-[20px] px-4 md:px-6"
       >
         {features.map((feature, index) => (
           <div
             key={index}
-            className="border border-[rgba(220,210,190,0.2)] rounded-2xl md:rounded-3xl lg:rounded-[20px] p-6 md:p-8 lg:p-[40px_32px_44px] text-center flex flex-col items-center transform transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:border-[rgba(220,210,190,0.4)] opacity-0 animate-fadeInUp"
+            className="border border-[rgba(220,210,190,0.2)] rounded-xl md:rounded-3xl lg:rounded-[20px] p-4 sm:p-6 md:p-8 lg:p-[40px_32px_44px] text-center flex flex-col items-center transform transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:border-[rgba(220,210,190,0.4)] opacity-0 animate-fadeInUp"
             style={{
               animationDelay: `${index * 150}ms`,
               animationFillMode: 'forwards'
             }}
           >
             {/* Icon */}
-            <div className="mb-4 md:mb-5 lg:mb-[20px] w-16 h-16 md:w-20 md:h-20 lg:w-[78px] lg:h-[78px] flex items-center justify-center">
+            <div className="mb-3 md:mb-5 lg:mb-[20px] w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-[78px] lg:h-[78px] flex items-center justify-center">
               <div className="w-full h-full [&>svg]:w-full [&>svg]:h-full">{feature.icon}</div>
             </div>
 
             {/* Title */}
             <h3
-              className="font-serif text-[#F0E6CC] text-lg md:text-xl lg:text-[1.45rem] font-bold mb-3 md:mb-3.5 lg:mb-[14px] tracking-wide"
+              className="font-serif text-[#F0E6CC] text-sm sm:text-lg md:text-xl lg:text-[1.45rem] font-bold mb-2 sm:mb-3 md:mb-3.5 lg:mb-[14px] tracking-wide"
             >
               {feature.title}
             </h3>
 
             {/* Description */}
             <p
-              className="text-[#F0E6CC] text-sm md:text-base lg:text-[0.88rem] leading-relaxed whitespace-pre-line"
+              className="text-[#F0E6CC] text-[0.7rem] sm:text-sm md:text-base lg:text-[0.88rem] leading-snug sm:leading-relaxed whitespace-pre-line"
               style={{
                 fontFamily: "'Georgia', 'Times New Roman', serif",
               }}

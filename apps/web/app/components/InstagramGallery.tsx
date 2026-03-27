@@ -46,18 +46,25 @@ export default function InstagramGallery() {
   const FRAME_W = 1440;
   const FRAME_H = 362;
 
-  // Mobile card angles for the fan/scroll layout
-  const mobileAngles = [-6, -2, 2, 6];
+  /** Mobile strip: no rotation — tilt was clipping inside overflow containers. */
+  const mobileCardStyle = {
+    width: "min(220px, calc(100vw - 2.5rem))",
+    height: "min(300px, 72vw)",
+    scrollSnapAlign: "center" as const,
+    boxShadow: "0 20px 60px rgba(0,0,0,0.45)",
+  };
 
   return (
-    <section className="bg-[#141826] py-8 md:py-10 overflow-hidden w-full">
+    <section className="w-full bg-[#141826] pt-8 pb-2 md:pt-10 md:pb-3 lg:overflow-hidden lg:py-10">
 
       {/* ─── MOBILE layout: horizontal scroll strip ─── */}
-      <div className="block lg:hidden">
+      <div className="block max-lg:overflow-x-clip lg:hidden">
         <div
-          className="flex items-center gap-4 px-6 overflow-x-auto pb-6"
+          className="flex items-stretch gap-3 overflow-x-auto scroll-smooth px-4 pb-0 pt-1 sm:gap-4 sm:px-6"
           style={{
             scrollSnapType: "x mandatory",
+            scrollPaddingLeft: "1rem",
+            scrollPaddingRight: "1rem",
             WebkitOverflowScrolling: "touch",
             msOverflowStyle: "none",
             scrollbarWidth: "none",
@@ -65,14 +72,10 @@ export default function InstagramGallery() {
         >
           {/* CTA card first on mobile */}
           <div
-            className="flex-shrink-0 rounded-2xl flex flex-col items-center justify-center gap-4 p-6 cursor-pointer"
+            className="flex shrink-0 cursor-pointer flex-col items-center justify-center gap-4 rounded-2xl p-5 sm:p-6"
             style={{
-              width: "220px",
-              height: "310px",
-              scrollSnapAlign: "start",
+              ...mobileCardStyle,
               background: "linear-gradient(155deg, #F5F0E8 0%, #EDE8DF 100%)",
-              boxShadow: "0 20px 60px rgba(0,0,0,0.45)",
-              transform: `rotate(-3deg)`,
             }}
           >
             <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#2a2020" strokeWidth="1.5">
@@ -83,26 +86,27 @@ export default function InstagramGallery() {
             <p style={{ fontFamily: "system-ui, -apple-system, sans-serif", fontSize: "1rem", fontWeight: 800, color: "#2a2020", letterSpacing: "0.03em" }}>
               #BEMOONZY
             </p>
-            <div style={{ borderRadius: "999px", padding: "1.5px", background: "linear-gradient(90deg, #4A6CF7 0%, #9B59B6 40%, #E74C8A 70%, #F39C12 100%)", width: "85%" }}>
-              <button style={{ width: "100%", padding: "10px 20px", borderRadius: "999px", border: "none", backgroundColor: "#1a1a2e", color: "#F5F0E8", fontFamily: "system-ui, -apple-system, sans-serif", fontSize: "0.85rem", fontWeight: 600, cursor: "pointer", letterSpacing: "0.03em" }}>
-                Follow Us
-              </button>
-            </div>
+            <button
+              type="button"
+              className="w-[85%] rounded-full border-none bg-[#D4A94C] px-5 py-2.5 text-[#141826] transition-colors hover:bg-[#e4bc69]"
+              style={{
+                fontFamily: "system-ui, -apple-system, sans-serif",
+                fontSize: "0.85rem",
+                fontWeight: 600,
+                cursor: "pointer",
+                letterSpacing: "0.03em",
+              }}
+            >
+              Follow Us
+            </button>
           </div>
 
           {/* Image cards */}
-          {cards.map((card, i) => (
+          {cards.map((card) => (
             <div
-              key={i}
-              className="flex-shrink-0 rounded-2xl overflow-hidden cursor-pointer"
-              style={{
-                width: "220px",
-                height: "310px",
-                scrollSnapAlign: "start",
-                boxShadow: "0 20px 60px rgba(0,0,0,0.45)",
-                transform: `rotate(${mobileAngles[i]}deg)`,
-                position: "relative",
-              }}
+              key={card.src}
+              className="relative shrink-0 cursor-pointer overflow-hidden rounded-2xl"
+              style={mobileCardStyle}
             >
               <img
                 src={card.src}
@@ -119,13 +123,6 @@ export default function InstagramGallery() {
                 <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.75rem", fontFamily: "system-ui, sans-serif" }}>{card.alt}</span>
               </div>
             </div>
-          ))}
-        </div>
-
-        {/* Scroll hint dots */}
-        <div className="flex justify-center gap-1.5 mt-2">
-          {[...Array(5)].map((_, i) => (
-            <div key={i} className="w-1 h-1 rounded-full bg-white/20" />
           ))}
         </div>
       </div>
@@ -157,11 +154,19 @@ export default function InstagramGallery() {
                   <p style={{ fontFamily: "system-ui, -apple-system, sans-serif", fontSize: "1.2rem", fontWeight: 800, color: "#2a2020", letterSpacing: "0.03em" }}>
                     #BEMOONZY
                   </p>
-                  <div style={{ borderRadius: "999px", padding: "1.5px", background: "linear-gradient(90deg, #4A6CF7 0%, #9B59B6 40%, #E74C8A 70%, #F39C12 100%)", width: "80%" }}>
-                    <button style={{ width: "100%", padding: "13px 28px", borderRadius: "999px", border: "none", backgroundColor: "#1a1a2e", color: "#F5F0E8", fontFamily: "system-ui, -apple-system, sans-serif", fontSize: "0.95rem", fontWeight: 600, cursor: "pointer", letterSpacing: "0.03em" }}>
-                      Follow Us
-                    </button>
-                  </div>
+                  <button
+                    type="button"
+                    className="w-4/5 rounded-full border-none bg-[#D4A94C] px-7 py-3.5 text-[#141826] transition-colors hover:bg-[#e4bc69]"
+                    style={{
+                      fontFamily: "system-ui, -apple-system, sans-serif",
+                      fontSize: "0.95rem",
+                      fontWeight: 600,
+                      cursor: "pointer",
+                      letterSpacing: "0.03em",
+                    }}
+                  >
+                    Follow Us
+                  </button>
                 </div>
               );
             }

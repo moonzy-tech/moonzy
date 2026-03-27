@@ -38,7 +38,7 @@ function HeroFeatureMarqueeStrip() {
 
 export default function HeroSection() {
   return (
-    <section id="home" className="w-full bg-[#141826] py-2 md:py-4">
+    <section id="home" className="w-full bg-[#141826] py-5 md:py-4">
       <div className="max-w-[1440px] mx-auto px-3 md:px-4 lg:px-6">
         <div style={{ backgroundColor: "#1E2235", borderRadius: "16px", overflow: "hidden" }} className="md:rounded-[20px] lg:rounded-[28px]">
           {/* Main Hero Area */}
@@ -46,7 +46,7 @@ export default function HeroSection() {
             className="px-4 md:px-8 lg:px-12 pt-6 md:pt-10 lg:pt-12 pb-6 md:pb-8 lg:pb-10 grid gap-6 md:gap-12 lg:gap-20 xl:gap-30 items-center grid-cols-1 lg:grid-cols-[minmax(340px,420px)_1fr]"
           >
         {/* Left Side - Text Content */}
-        <div className="space-y-4 md:space-y-6 lg:space-y-7 opacity-0 animate-fadeInUp" style={{ animationDelay: '200ms', animationFillMode: 'forwards' }}>
+        <div className="space-y-4 md:space-y-6 lg:space-y-7 text-center lg:text-left opacity-0 animate-fadeInUp" style={{ animationDelay: '200ms', animationFillMode: 'forwards' }}>
           <h1
             className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-[70px]"
             style={{
@@ -65,7 +65,7 @@ export default function HeroSection() {
           </h1>
 
           <p
-            className="text-white/85 text-sm sm:text-base md:text-lg max-w-[340px]"
+            className="text-white/85 text-sm sm:text-base md:text-lg max-w-[340px] mx-auto lg:mx-0"
             style={{
               fontFamily: "'Playfair Display', serif",
               fontWeight: 500,
@@ -79,29 +79,21 @@ export default function HeroSection() {
             <br className="hidden sm:block" />a problem. It&apos;s your time.
           </p>
 
-          <a
-            href="#shop"
-            className="hover:brightness-110 transition-all cursor-pointer text-xs sm:text-sm md:text-[15.1px] px-8 sm:px-12 md:px-14 lg:px-[58px] py-1.5 md:py-[7px] hover:scale-[1.03] hover:shadow-2xl animate-float"
-            style={{
-              backgroundColor: "#F4C040",
-              color: "#1a1a1a",
-              fontFamily: "'Playfair Display', serif",
-              fontWeight: 700,
-              fontStyle: "bold",
-              lineHeight: "2.5",
-              letterSpacing: "0%",
-              textAlign: "center",
-              verticalAlign: "middle",
-              borderRadius: "999px",
-              border: "none",
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              textDecoration: "none",
-            }}
-          >
-            Shop the Night
-          </a>
+          <div className="flex justify-center lg:justify-start">
+            <a
+              href="/product"
+              className="inline-flex cursor-pointer items-center justify-center rounded-full border-none bg-[#D4A94C] px-8 py-1.5 text-xs font-bold text-[#141826] shadow-[0_18px_50px_rgba(0,0,0,0.28)] transition-all hover:-translate-y-px hover:scale-[1.03] hover:bg-[#e4bc69] hover:shadow-2xl sm:px-12 sm:text-sm md:px-14 md:py-[7px] md:text-[15.1px] lg:px-[58px]"
+              style={{
+                fontFamily: "'Playfair Display', serif",
+                fontWeight: 700,
+                lineHeight: "2.5",
+                letterSpacing: "0%",
+                textDecoration: "none",
+              }}
+            >
+              Shop the Night
+            </a>
+          </div>
         </div>
 
         {/* Right Side - Bento Grid */}
@@ -469,14 +461,14 @@ export default function HeroSection() {
 
         {/* Content layer */}
             <div
-              className="px-4 md:px-8 lg:px-12 py-4 md:py-0 flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-0 h-full"
+              className="px-4 md:px-8 lg:px-12 py-4 md:py-0 flex flex-col md:flex-row items-center md:items-center gap-4 md:gap-0 h-full"
               style={{
                 position: "relative",
                 zIndex: 2,
               }}
             >
           {/* Left - Cookie icon + text */}
-          <div className="flex items-center gap-2 md:gap-3 lg:gap-[14px] md:mr-auto">
+          <div className="flex items-center justify-center md:justify-start gap-2 md:gap-3 lg:gap-[14px] md:mr-auto">
             {/* Cookie icon */}
             <svg
               className="w-4 h-4 md:w-5 md:h-5 lg:w-[22px] lg:h-[22px] flex-shrink-0"
@@ -496,7 +488,7 @@ export default function HeroSection() {
               {/* Bite mark */}
               <path d="M18.5,5.5 Q21,8 19,11" stroke="rgba(255,255,255,0.7)" fill="none" />
             </svg>
-            <span className="text-white text-xs sm:text-sm md:text-base lg:text-[18.12px] font-medium leading-tight">
+            <span className="text-white text-xs sm:text-sm md:text-base lg:text-[18.12px] font-medium leading-tight text-center md:text-left">
               Join thousands of healthy kids,{" "}
               <a href="#blogs" className="underline cursor-pointer">
                 Read More

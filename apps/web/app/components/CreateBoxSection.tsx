@@ -57,17 +57,11 @@ export default function CreateBoxSection() {
                   key={step.num}
                   className="flex items-center gap-3 md:gap-4"
                 >
-                  {/* Number circle */}
+                  {/* Number circle — gold fill + dark numeral (readable, matches CTAs) */}
                   <div
-                    className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-[#878A86] flex items-center justify-center shrink-0"
-                    style={{
-                      boxShadow:
-                        "inset 0 1px 2px rgba(255,255,255,0.15), 0 2px 6px rgba(0,0,0,0.3)",
-                    }}
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#D4A94C] shadow-[0_2px_8px_rgba(0,0,0,0.25)] ring-1 ring-[#F5F0E8]/25 md:h-10 md:w-10"
                   >
-                    <span
-                      className="font-serif text-[#D4A94C] text-sm md:text-[0.9rem] font-semibold"
-                    >
+                    <span className="font-serif text-sm font-bold text-[#141826] md:text-[0.95rem] tabular-nums">
                       {step.num}
                     </span>
                   </div>
@@ -83,25 +77,16 @@ export default function CreateBoxSection() {
             </div>
           </div>
 
-          {/* Button with gradient border */}
-          <div
-            className="mt-8 md:mt-10 lg:mt-11 relative rounded-full p-[1.5px] overflow-hidden transition-shadow duration-300 hover:shadow-[0_0_24px_rgba(155,89,182,0.35)]"
+          <button
+            type="button"
+            onClick={() => router.push("/product")}
+            className="mt-8 w-full rounded-full border-none bg-[#D4A94C] px-6 py-3 font-serif text-sm font-semibold text-[#141826] shadow-[0_18px_50px_rgba(0,0,0,0.28)] transition-all duration-300 hover:-translate-y-px hover:bg-[#e4bc69] md:mt-10 md:px-8 md:py-4 md:text-base lg:mt-11"
             style={{
-              background:
-                "linear-gradient(90deg, #4A6CF7 0%, #9B59B6 40%, #E74C8A 70%, #F39C12 100%)",
+              letterSpacing: "0.02em",
             }}
           >
-            <button
-              type="button"
-              onClick={() => router.push("/product")}
-              className="w-full px-6 md:px-8 py-3 md:py-4 rounded-full border-none bg-[#15172a] text-[#F5F0E8] font-serif text-sm md:text-base font-semibold cursor-pointer transition-all duration-300 hover:bg-[#171a30]"
-              style={{
-                letterSpacing: "0.02em",
-              }}
-            >
-              Shop the Night
-            </button>
-          </div>
+            Shop the Night
+          </button>
         </div>
 
         {/* Right Side - Product Box Image */}

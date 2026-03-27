@@ -201,25 +201,25 @@ export default async function BlogDetailPage({ params }: Props) {
               }}
             >
               <span
-                className="text-[#D4A94C] text-xs font-semibold uppercase tracking-[0.18em]"
+                className="text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-[#D4A94C] sm:text-xs sm:tracking-[0.18em]"
                 style={{
                   fontFamily: "'Instrument Sans', system-ui, sans-serif",
                 }}
               >
                 {blog.author}
               </span>
-              <span className="w-1 h-1 rounded-full bg-[rgba(200,195,185,0.35)]" />
+              <span className="h-1 w-1 rounded-full bg-[rgba(200,195,185,0.35)]" />
               <span
-                className="text-[rgba(200,195,185,0.55)] text-xs uppercase tracking-[0.12em]"
+                className="text-[0.65rem] uppercase tracking-[0.08em] text-[rgba(200,195,185,0.55)] sm:text-xs sm:tracking-[0.12em]"
                 style={{
                   fontFamily: "'Instrument Sans', system-ui, sans-serif",
                 }}
               >
                 {formatDate(blog.publishDate)}
               </span>
-              <span className="w-1 h-1 rounded-full bg-[rgba(200,195,185,0.35)]" />
+              <span className="h-1 w-1 rounded-full bg-[rgba(200,195,185,0.35)]" />
               <span
-                className="text-[rgba(200,195,185,0.55)] text-xs uppercase tracking-[0.12em]"
+                className="text-[0.65rem] uppercase tracking-[0.08em] text-[rgba(200,195,185,0.55)] sm:text-xs sm:tracking-[0.12em]"
                 style={{
                   fontFamily: "'Instrument Sans', system-ui, sans-serif",
                 }}
@@ -283,13 +283,13 @@ export default async function BlogDetailPage({ params }: Props) {
         </div>
 
         {/* ── Author Card ── */}
-        <div className="flex items-center gap-4 p-6 rounded-2xl bg-[#1A1F33]/80 border border-[rgba(200,195,185,0.08)] mb-14">
-          <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#D4A94C] to-[#B8922E] flex items-center justify-center text-[#1E2235] font-bold text-xl shrink-0">
+        <div className="mb-14 flex items-center gap-3 rounded-2xl border border-[rgba(200,195,185,0.08)] bg-[#1A1F33]/80 p-5 sm:gap-4 sm:p-6">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#D4A94C] to-[#B8922E] text-lg font-bold text-[#1E2235] sm:h-14 sm:w-14 sm:text-xl">
             {blog.author[0]}
           </div>
-          <div>
+          <div className="min-w-0">
             <p
-              className="text-[#F5F0E8] font-semibold text-[0.95rem]"
+              className="text-[0.8rem] font-semibold text-[#F5F0E8] sm:text-[0.9rem]"
               style={{
                 fontFamily: "'Instrument Sans', system-ui, sans-serif",
               }}
@@ -297,7 +297,7 @@ export default async function BlogDetailPage({ params }: Props) {
               Written by {blog.author}
             </p>
             <p
-              className="text-[rgba(200,195,185,0.5)] text-sm mt-0.5"
+              className="mt-0.5 text-[0.7rem] text-[rgba(200,195,185,0.5)] sm:text-xs"
               style={{
                 fontFamily: "'Instrument Sans', system-ui, sans-serif",
               }}

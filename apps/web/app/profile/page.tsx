@@ -8,6 +8,8 @@ import { fetchProfile, updateProfile } from "@/lib/profile";
 import Navigation from "../components/Navigation";
 import FooterSection from "../components/FooterSection";
 
+const INSTRUMENT_SANS = "'Instrument Sans', system-ui, sans-serif";
+
 const emptyAddress: Address = {
   name: "",
   phone: "",
@@ -103,8 +105,10 @@ export default function ProfilePage() {
 
   const inputClass =
     "w-full rounded-xl border border-[rgba(200,195,185,0.2)] bg-[#141826]/80 px-3 py-2.5 text-sm text-[#F5F0E8] outline-none placeholder:text-[rgba(200,195,185,0.4)] focus:border-[#D4A94C] focus:ring-1 focus:ring-[#D4A94C]/30";
+  const inputClassNumeric = `${inputClass} tabular-nums tracking-wide`;
+  /* Playfair for field titles; Instrument Sans stays on inputs via form style */
   const labelClass =
-    "text-xs font-semibold uppercase tracking-[0.22em] text-[rgba(200,195,185,0.55)]";
+    "block font-serif text-xs font-semibold uppercase tracking-[0.2em] text-[rgba(200,195,185,0.55)] antialiased";
 
   if (authLoading || loading) {
     return (
@@ -163,6 +167,7 @@ export default function ProfilePage() {
         <form
           onSubmit={handleSubmit}
           className="mx-auto max-w-3xl space-y-6 rounded-[20px] border border-[rgba(200,195,185,0.08)] bg-[#1A1F33]/65 p-6 shadow-[0_8px_40px_rgba(0,0,0,0.3)] sm:p-8"
+          style={{ fontFamily: INSTRUMENT_SANS }}
         >
           {error && (
             <p className="rounded-lg border border-red-400/30 bg-red-500/10 px-3 py-2 text-sm text-red-300">
@@ -210,12 +215,12 @@ export default function ProfilePage() {
                 required
                 value={address.phone}
                 onChange={handleChange("phone")}
-                className={inputClass}
+                className={inputClassNumeric}
               />
             </div>
             <div className="space-y-1.5">
               <label htmlFor="pincode" className={labelClass}>
-                Pincode
+                PIN code
               </label>
               <input
                 id="pincode"
@@ -223,7 +228,7 @@ export default function ProfilePage() {
                 required
                 value={address.pincode}
                 onChange={handleChange("pincode")}
-                className={inputClass}
+                className={inputClassNumeric}
               />
             </div>
           </div>
@@ -306,9 +311,9 @@ export default function ProfilePage() {
             <button
               type="submit"
               disabled={saving}
-              className="inline-flex items-center justify-center rounded-full bg-[#D4A94C] px-7 py-2.5 text-[0.7rem] uppercase tracking-[0.22em] text-[#141826] shadow-[0_14px_35px_rgba(0,0,0,0.3)] transition hover:-translate-y-0.5 hover:shadow-[0_20px_55px_rgba(0,0,0,0.4)] disabled:cursor-not-allowed disabled:opacity-70"
+              className="inline-flex items-center justify-center rounded-full bg-[#D4A94C] px-7 py-2.5 font-serif text-sm font-semibold uppercase tracking-[0.14em] text-[#141826] shadow-[0_14px_35px_rgba(0,0,0,0.3)] transition hover:-translate-y-0.5 hover:shadow-[0_20px_55px_rgba(0,0,0,0.4)] disabled:cursor-not-allowed disabled:opacity-70"
             >
-              {saving ? "Saving..." : "Save profile"}
+              {saving ? "Saving…" : "Save profile"}
             </button>
           </div>
         </form>

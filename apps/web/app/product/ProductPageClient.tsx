@@ -195,10 +195,20 @@ export default function ProductPageClient() {
       <section className="bg-[#1E2030] py-12 md:py-16">
         <div className="mx-auto grid max-w-[1080px] grid-cols-1 lg:grid-cols-[380px_1fr] gap-5 md:gap-6 items-stretch px-4 sm:px-6 md:px-8 lg:px-6">
 
-          {/* Left — CTA Card */}
-          <div className="opacity-0 animate-fadeInUp transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl lg:sticky lg:top-[100px]" style={{ backgroundColor: "#2B2D3A", borderRadius: "24px", padding: "40px 24px 34px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: "22px", animationDelay: '100ms', animationFillMode: 'forwards', alignSelf: "start" }}>
+          {/* Left — CTA Card (stretches to match FAQ column height on lg) */}
+          <div
+            className="opacity-0 animate-fadeInUp flex h-full min-h-0 flex-col items-center text-center transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl"
+            style={{
+              backgroundColor: "#2B2D3A",
+              borderRadius: "24px",
+              padding: "40px 24px 34px",
+              gap: "22px",
+              animationDelay: "100ms",
+              animationFillMode: "forwards",
+            }}
+          >
             {/* Icon */}
-            <div style={{ marginBottom: "12px" }}>
+            <div className="shrink-0" style={{ marginBottom: "12px" }}>
               <svg width="64" height="75" viewBox="0 0 64 64" fill="none">
                 <rect x="8" y="10" width="48" height="36" rx="4" stroke="white" strokeWidth="3" fill="none" />
                 <path d="M8 46 L20 56" stroke="white" strokeWidth="3" strokeLinecap="round" />
@@ -208,17 +218,24 @@ export default function ProductPageClient() {
               </svg>
             </div>
 
-            <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", color: "#F5F5F0", fontSize: "clamp(1.6rem, 5vw, 2.25rem)", fontWeight: 400, lineHeight: 1.25, margin: 0 }}>
+            <h2 className="shrink-0" style={{ fontFamily: "'Playfair Display', Georgia, serif", color: "#F5F5F0", fontSize: "clamp(1.6rem, 5vw, 2.25rem)", fontWeight: 400, lineHeight: 1.25, margin: 0 }}>
               Everything Parents<br />Want to Know
             </h2>
 
-            <p style={{ fontFamily: "'Georgia', serif", color: "rgba(255,255,255,0.7)", fontSize: "0.95rem", lineHeight: 1.7, maxWidth: "340px", margin: 0 }}>
+            <p
+              className="min-h-0 flex-1"
+              style={{ fontFamily: "'Georgia', serif", color: "rgba(255,255,255,0.7)", fontSize: "0.95rem", lineHeight: 1.7, maxWidth: "340px", margin: 0 }}
+            >
               Thoughtful answers about our ingredients, recipes, and processes—designed to give parents peace of mind at every step.
             </p>
 
-            <button className="transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:brightness-110" style={{ width: "100%", backgroundColor: "#D4A94C", color: "#2B2D3A", padding: "15px 24px", borderRadius: "999px", border: "none", fontFamily: "system-ui, -apple-system, sans-serif", fontSize: "0.82rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", cursor: "pointer", marginTop: "12px" }}>
-              SHOOT A DIRECT
-            </button>
+            <Link
+              href="/contact"
+              className="mt-auto flex w-full shrink-0 items-center justify-center text-center no-underline transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:brightness-110"
+              style={{ backgroundColor: "#D4A94C", color: "#2B2D3A", padding: "15px 24px", borderRadius: "999px", fontFamily: "system-ui, -apple-system, sans-serif", fontSize: "0.82rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}
+            >
+              Contact Us
+            </Link>
           </div>
 
           {/* Right — FAQ Accordion with visible cream borders */}
@@ -285,7 +302,6 @@ export default function ProductPageClient() {
         <div className="mx-auto max-w-[1080px] px-4 sm:px-6 md:px-8 lg:px-6">
           <div className="opacity-0 animate-fadeInUp flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8" style={{ animationDelay: '100ms', animationFillMode: 'forwards' }}>
             <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", color: "#F5F0E8", fontSize: "2rem", fontWeight: 500 }}>You may also like</h2>
-            <button className="transition-all duration-300 hover:scale-[1.05] hover:bg-white hover:text-[#1E2030]" style={{ border: "1.5px solid rgba(200,195,185,0.2)", borderRadius: "999px", padding: "9px 24px", background: "transparent", color: "#F5F0E8", fontFamily: "'Instrument Sans', system-ui, sans-serif", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>VIEW ALL</button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {otherProducts.map((product, index) => (

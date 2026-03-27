@@ -43,6 +43,8 @@ type Recommendation = {
   rating: number;
 };
 
+const PLAYFAIR_STACK = "'Playfair Display', Georgia, serif";
+
 const GENRE_TO_TMDB_ID: Record<Genre, number | null> = {
   All: null,
   Action: 28,
@@ -245,6 +247,7 @@ export default function QRPage() {
     <main className="relative min-h-screen bg-[#141826] text-[#F5F0E8]">
       <Navigation />
 
+      <div style={{ fontFamily: PLAYFAIR_STACK }}>
       <section className="relative overflow-hidden pt-24 pb-12 md:pb-16">
         <div
           className="pointer-events-none absolute top-0 left-1/2 h-[500px] w-[800px] -translate-x-1/2 opacity-[0.07]"
@@ -255,25 +258,37 @@ export default function QRPage() {
         />
         <div className="relative mx-auto max-w-[1200px] px-6 text-center md:px-10 lg:px-12">
           <p
-            className="mb-5 text-xs font-semibold uppercase tracking-[0.25em] text-[#D4A94C]"
-            style={{ fontFamily: "'Instrument Sans', system-ui, sans-serif" }}
+            className="mb-5 text-xs font-semibold uppercase tracking-[0.25em] text-[#D4A94C] opacity-0 animate-fadeInUp"
+            style={{
+              animationDelay: "100ms",
+              animationFillMode: "forwards",
+            }}
           >
             Movie Night Picks
           </p>
           <h1
-            className="mb-5 text-5xl font-normal text-[#F5F0E8] md:mb-6 md:text-6xl lg:text-7xl"
-            style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+            className="mb-5 text-5xl font-normal text-[#F5F0E8] opacity-0 animate-fadeInUp md:mb-6 md:text-6xl lg:text-7xl"
+            style={{
+              animationDelay: "200ms",
+              animationFillMode: "forwards",
+            }}
           >
             Stuck on what to watch?
           </h1>
           <p
-            className="mx-auto max-w-[620px] text-base leading-relaxed text-[rgba(200,195,185,0.6)] md:text-lg"
-            style={{ fontFamily: "'Instrument Sans', system-ui, sans-serif" }}
+            className="mx-auto max-w-[620px] text-base leading-relaxed text-[rgba(200,195,185,0.6)] opacity-0 animate-fadeInUp md:text-lg"
+            style={{
+              animationDelay: "300ms",
+              animationFillMode: "forwards",
+            }}
           >
             One fresh pick every hour — choose your vibe, then stream. Built
             for nights with Moonzy.
           </p>
-          <div className="mt-8 flex items-center justify-center gap-3">
+          <div
+            className="mt-8 flex items-center justify-center gap-3 opacity-0 animate-fadeInUp"
+            style={{ animationDelay: "400ms", animationFillMode: "forwards" }}
+          >
             <span className="h-px w-16 bg-[rgba(200,195,185,0.15)]" />
             <span className="h-1.5 w-1.5 rotate-45 border border-[#D4A94C]/40" />
             <span className="h-px w-16 bg-[rgba(200,195,185,0.15)]" />
@@ -283,24 +298,21 @@ export default function QRPage() {
 
       <section className="relative mx-auto flex max-w-[1200px] flex-col gap-10 px-6 pb-20 md:flex-row md:items-stretch md:px-10 lg:px-12 md:pb-28">
         {/* Left: Copy + Genres */}
-        <div className="flex flex-1 flex-col justify-between gap-10">
+        <div
+          className="flex flex-1 flex-col justify-between gap-10 opacity-0 animate-fadeInUp"
+          style={{ animationDelay: "450ms", animationFillMode: "forwards" }}
+        >
           <div className="space-y-4 md:space-y-6">
             <p className="inline-flex items-center gap-2 rounded-full border border-[rgba(200,195,185,0.12)] bg-[#1A1F33]/60 px-4 py-1 text-xs font-medium uppercase tracking-[0.2em] text-[#D4A94C] backdrop-blur">
               <span className="h-1.5 w-1.5 rounded-full bg-[#D4A94C] shadow-[0_0_10px_rgba(212,169,76,0.6)]" />
               Movie of the hour
             </p>
 
-            <h2
-              className="text-2xl font-normal leading-tight text-[#F5F0E8] md:text-3xl lg:text-4xl"
-              style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-            >
+            <h2 className="text-2xl font-normal leading-tight text-[#F5F0E8] md:text-3xl lg:text-4xl">
               Let us pick your perfect movie.
             </h2>
 
-            <p
-              className="max-w-xl text-sm text-[rgba(200,195,185,0.72)] md:text-base"
-              style={{ fontFamily: "'Instrument Sans', system-ui, sans-serif" }}
-            >
+            <p className="max-w-xl text-sm leading-relaxed text-[rgba(200,195,185,0.72)] md:text-base">
               Choose your vibe and we&apos;ll serve a fresh, curated movie
               recommendation that automatically refreshes every hour. One click,
               and you&apos;re on the OTT platform ready to stream.
@@ -394,7 +406,10 @@ export default function QRPage() {
         </div>
 
         {/* Right: Recommendation card */}
-        <div className="relative flex flex-1 items-stretch">
+        <div
+          className="relative flex flex-1 items-stretch opacity-0 animate-fadeInUp"
+          style={{ animationDelay: "530ms", animationFillMode: "forwards" }}
+        >
           <div className="relative w-full overflow-hidden rounded-[20px] border border-[rgba(200,195,185,0.08)] bg-[#1A1F33]/70 shadow-[0_8px_40px_rgba(0,0,0,0.35)] backdrop-blur-xl">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,169,76,0.12),transparent_55%),radial-gradient(circle_at_bottom,rgba(20,24,38,0.5),transparent_55%)] opacity-90" />
 
@@ -452,12 +467,7 @@ export default function QRPage() {
                   {recommendation ? (
                     <>
                       <div className="space-y-1">
-                        <h2
-                          className="text-xl font-semibold leading-tight text-[#F5F0E8] drop-shadow-sm md:text-2xl"
-                          style={{
-                            fontFamily: "'Playfair Display', Georgia, serif",
-                          }}
-                        >
+                        <h2 className="text-xl font-semibold leading-tight text-[#F5F0E8] drop-shadow-sm md:text-2xl">
                           {recommendation.title}
                           <span className="ml-2 text-sm font-normal text-[rgba(200,195,185,0.75)] md:text-base">
                             {recommendation.year ? `(${recommendation.year})` : ""}
@@ -504,7 +514,7 @@ export default function QRPage() {
                     href={recommendation?.ottUrl ?? "#"}
                     target="_blank"
                     rel="noreferrer"
-                    className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-[#D4A94C] px-4 py-2.5 text-sm font-semibold text-[#141826] shadow-[0_18px_50px_rgba(0,0,0,0.35)] transition-transform duration-150 hover:-translate-y-px hover:bg-[#e4bc69] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A94C]/50 md:px-6 md:py-3 md:text-base"
+                    className="group inline-flex items-center justify-center gap-2 rounded-2xl bg-[#D4A94C] px-4 py-2.5 text-sm font-semibold tracking-wide text-[#141826] shadow-[0_18px_50px_rgba(0,0,0,0.35)] transition-transform duration-150 hover:-translate-y-px hover:bg-[#e4bc69] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A94C]/50 md:px-6 md:py-3 md:text-base"
                   >
                     <span>
                       {recommendation
@@ -529,6 +539,7 @@ export default function QRPage() {
           </div>
         </div>
       </section>
+      </div>
 
       <FooterSection />
     </main>

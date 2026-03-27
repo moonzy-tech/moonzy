@@ -84,7 +84,7 @@ export default function Navigation() {
     <nav
       className={`sticky top-2 z-50 bg-[#F5F5F0] rounded-[24px] md:rounded-[32px] mx-auto mt-3 md:mt-[13px] px-4 md:px-8 lg:px-12 h-auto md:h-[75px] py-4 md:py-0 flex flex-col md:flex-row md:items-center md:justify-between box-border transition-[width,max-width,box-shadow] duration-300 ease-out ${
         isScrolled
-          ? "w-[calc(100%-4rem)] md:w-[calc(100%-8rem)] lg:w-[calc(100%-12rem)] max-w-[1100px] shadow-2xl"
+          ? "w-[calc(100%-2rem)] md:w-[calc(100%-8rem)] lg:w-[calc(100%-12rem)] max-w-[1100px] shadow-2xl"
           : "w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] lg:w-[calc(100%-4rem)] max-w-[1397px] shadow-sm"
       }`}
     >
@@ -104,37 +104,39 @@ export default function Navigation() {
         />
       </Link>
 
-      {/* ── Mobile top bar: Logo + Hamburger ←→ (Login + Cart) ── */}
-      <div className="flex w-full items-center justify-between md:hidden">
-        <div className="flex items-center gap-1">
-          <Link
-            href="/"
-            className="flex shrink-0 items-center pr-1 outline-none transition hover:opacity-85 focus-visible:ring-2 focus-visible:ring-black/20"
-            aria-label="Moonzy home"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            <Image
-              src="/logo.png"
-              alt="Moonzy"
-              width={120}
-              height={36}
-              className="h-7 w-auto"
-              priority
-            />
-          </Link>
+      {/* ── Mobile top bar: Menu │ centered Logo │ Login + Cart ── */}
+      <div className="grid w-full grid-cols-[1fr_auto_1fr] items-center gap-2 md:hidden">
+        <div className="flex justify-self-start">
           <button
+            type="button"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="flex flex-col gap-1 p-2"
             aria-label="Toggle menu"
           >
-            <div className={`w-6 h-0.5 bg-black transition-all duration-300 ${isMenuOpen ? "rotate-45 translate-y-1.5" : ""}`} />
-            <div className={`w-6 h-0.5 bg-black transition-all duration-300 ${isMenuOpen ? "opacity-0" : ""}`} />
-            <div className={`w-6 h-0.5 bg-black transition-all duration-300 ${isMenuOpen ? "-rotate-45 -translate-y-1.5" : ""}`} />
+            <div className={`h-0.5 w-6 bg-black transition-all duration-300 ${isMenuOpen ? "translate-y-1.5 rotate-45" : ""}`} />
+            <div className={`h-0.5 w-6 bg-black transition-all duration-300 ${isMenuOpen ? "opacity-0" : ""}`} />
+            <div className={`h-0.5 w-6 bg-black transition-all duration-300 ${isMenuOpen ? "-translate-y-1.5 -rotate-45" : ""}`} />
           </button>
         </div>
 
-        {/* Login / Avatar + Cart — always grouped together on mobile */}
-        <div className="flex items-center gap-2.5">
+        <Link
+          href="/"
+          className="justify-self-center flex shrink-0 items-center outline-none transition hover:opacity-85 focus-visible:ring-2 focus-visible:ring-black/20"
+          aria-label="Moonzy home"
+          onClick={() => setIsMenuOpen(false)}
+        >
+          <Image
+            src="/logo.png"
+            alt="Moonzy"
+            width={120}
+            height={36}
+            className="h-7 w-auto"
+            priority
+          />
+        </Link>
+
+        {/* Login / Avatar + Cart */}
+        <div className="flex justify-self-end items-center gap-2.5">
           {!loading && !user && (
             <button
               type="button"
@@ -198,10 +200,29 @@ export default function Navigation() {
         }`}
       >
         <button type="button" onClick={() => handleNavClick("home")} className="text-black font-serif text-sm md:text-base tracking-wide hover:opacity-70 transition-all duration-300 hover:scale-[1.03] whitespace-nowrap w-full md:w-auto text-center md:text-left py-2 md:py-0">HOME</button>
-        <button type="button" onClick={() => handleNavClick("shop")} className="text-black font-serif text-sm md:text-base tracking-wide hover:opacity-70 transition-all duration-300 hover:scale-[1.03] whitespace-nowrap w-full md:w-auto text-center md:text-left py-2 md:py-0">SHOP</button>
+        <button type="button" onClick={() => { router.push("/about"); setIsMenuOpen(false); }} className="text-black font-serif text-sm md:text-base tracking-wide hover:opacity-70 transition-all duration-300 hover:scale-[1.03] whitespace-nowrap w-full md:w-auto text-center md:text-left py-2 md:py-0">ABOUT US</button>
+        <button
+          type="button"
+          onClick={() => {
+            router.push("/product");
+            setIsMenuOpen(false);
+          }}
+          className="text-black font-serif text-sm md:text-base tracking-wide hover:opacity-70 transition-all duration-300 hover:scale-[1.03] whitespace-nowrap w-full md:w-auto text-center md:text-left py-2 md:py-0"
+        >
+          SHOP
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            router.push("/qr");
+            setIsMenuOpen(false);
+          }}
+          className="text-black font-serif text-sm md:text-base tracking-wide hover:opacity-70 transition-all duration-300 hover:scale-[1.03] whitespace-nowrap w-full md:w-auto text-center md:text-left py-2 md:py-0"
+        >
+          MOVIE NIGHT PICKS
+        </button>
         <button type="button" onClick={() => { router.push("/blog"); setIsMenuOpen(false); }} className="text-black font-serif text-sm md:text-base tracking-wide hover:opacity-70 transition-all duration-300 hover:scale-[1.03] whitespace-nowrap w-full md:w-auto text-center md:text-left py-2 md:py-0">JOURNAL</button>
-        <button type="button" onClick={() => handleNavClick("about")} className="text-black font-serif text-sm md:text-base tracking-wide hover:opacity-70 transition-all duration-300 hover:scale-[1.03] whitespace-nowrap w-full md:w-auto text-center md:text-left py-2 md:py-0">ABOUT US</button>
-        <button type="button" onClick={() => handleNavClick("contact")} className="text-black font-serif text-sm md:text-base tracking-wide hover:opacity-70 transition-all duration-300 hover:scale-[1.03] whitespace-nowrap w-full md:w-auto text-center md:text-left py-2 md:py-0">CONTACT US</button>
+        <button type="button" onClick={() => { router.push("/contact"); setIsMenuOpen(false); }} className="text-black font-serif text-sm md:text-base tracking-wide hover:opacity-70 transition-all duration-300 hover:scale-[1.03] whitespace-nowrap w-full md:w-auto text-center md:text-left py-2 md:py-0">CONTACT US</button>
 
         {/* Desktop: Login/Avatar + Cart — separated by a subtle divider */}
         <div className="hidden md:flex items-center gap-3 ml-2 pl-6 border-l border-black/10">

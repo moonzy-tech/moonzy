@@ -103,7 +103,7 @@ export default function ProductsSection() {
 
         {/* Product Grid */}
         <div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 lg:gap-10"
+          className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5 lg:gap-10"
         >
           {uiProducts.map((product) => {
             const productHref = `/product?flavor=${product.flavorId}`;
@@ -112,14 +112,7 @@ export default function ProductsSection() {
               key={product.key}
               href={productHref}
               aria-label={`View ${product.name}`}
-              className="group"
-              style={{
-                cursor: "pointer",
-                display: "block",
-                width: "100%",
-                maxWidth: "280px",
-                justifySelf: "center",
-              }}
+              className="group block w-full min-w-0 cursor-pointer lg:mx-auto lg:max-w-[280px]"
               onClick={(e) => {
                 e.preventDefault();
                 router.push(productHref);

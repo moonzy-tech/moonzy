@@ -39,34 +39,25 @@ export default function JournalSection() {
       className="bg-[#141826] py-12 md:py-16 lg:py-18 xl:py-20"
     >
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-12">
-        {/* Header Row */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 md:mb-10 lg:mb-9">
-          <h2 className="font-serif text-[#F5F0E8] text-2xl sm:text-3xl md:text-4xl lg:text-[2.8rem] font-bold tracking-wide">
+        {/* Header Row — centered on mobile, side-by-side from sm */}
+        <div className="mb-8 flex flex-col items-center gap-4 text-center sm:mb-10 sm:flex-row sm:items-center sm:justify-between sm:text-left md:mb-10 lg:mb-9">
+          <h2 className="max-w-xl font-serif text-2xl font-bold tracking-wide text-[#F5F0E8] sm:max-w-none sm:text-3xl md:text-4xl lg:text-[2.8rem]">
             From the Moonzy Journal
           </h2>
 
-          {/* See More - Gradient border button */}
           <Link
             href="/blog"
-            className="rounded-full p-[1.5px] overflow-hidden transition-shadow duration-300 hover:shadow-[0_0_24px_rgba(155,89,182,0.35)]"
+            className="inline-block shrink-0 rounded-full bg-[#D4A94C] px-6 py-2 font-serif text-sm font-semibold text-[#141826] shadow-[0_18px_50px_rgba(0,0,0,0.28)] transition-all duration-300 hover:-translate-y-px hover:bg-[#e4bc69] sm:self-auto md:px-8 md:py-2.5 md:text-[0.95rem]"
             style={{
-              background:
-                "linear-gradient(90deg, #4A6CF7 0%, #9B59B6 40%, #E74C8A 70%, #F39C12 100%)",
+              letterSpacing: "0.02em",
             }}
           >
-            <span
-              className="block bg-[#15172a] text-[#F5F0E8] px-6 md:px-8 py-2 md:py-2.5 rounded-full text-sm md:text-[0.95rem] font-serif font-semibold transition-all duration-300 hover:bg-[#171a30]"
-              style={{
-                letterSpacing: "0.02em",
-              }}
-            >
-              See More
-            </span>
+            See More
           </Link>
         </div>
 
         {/* Blog Posts Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5">
           {posts.slice(0, 3).map((post, index) => (
             <Link
               href={`/blog/${post.slug}`}
@@ -157,29 +148,29 @@ export default function JournalSection() {
               </div>
 
               {/* Text Info Area */}
-              <div className="p-5 md:p-6 pb-6 md:pb-7 bg-[#1E2235]">
+              <div className="p-2 md:p-5 lg:p-6 pb-3 md:pb-6 lg:pb-7 bg-[#1E2235]">
                 {/* Title */}
-                <h3 className="font-serif text-[#F5F0E8] text-base md:text-lg lg:text-xl font-medium mb-2.5 md:mb-3 leading-tight italic">
+                <h3 className="font-serif text-[#F5F0E8] text-xs md:text-base lg:text-lg xl:text-xl font-medium mb-1.5 md:mb-2.5 lg:mb-3 leading-tight italic line-clamp-2">
                   {post.title}
                 </h3>
 
                 {/* Author & Date Row */}
-                <div className="flex items-center gap-5">
+                <div className="flex items-center gap-3 md:gap-5">
                   {/* Author */}
-                  <div className="flex items-center gap-2.5">
+                  <div className="flex items-center gap-1.5 md:gap-2.5">
                     <div
                       className="shrink-0 overflow-hidden"
                       style={{
-                        width: "24px",
-                        height: "24px",
-                        borderRadius: "6px",
+                        width: "16px",
+                        height: "16px",
+                        borderRadius: "4px",
                         background:
                           "linear-gradient(135deg, #8899aa, #667788)",
                       }}
                     >
                       <svg
-                        width="24"
-                        height="24"
+                        width="16"
+                        height="16"
                         viewBox="0 0 28 28"
                         fill="rgba(255,255,255,0.6)"
                       >
@@ -188,7 +179,7 @@ export default function JournalSection() {
                       </svg>
                     </div>
                     <span
-                      className="text-[rgba(200,195,185,0.65)] text-[0.8rem] font-medium"
+                      className="text-[rgba(200,195,185,0.65)] text-[0.6rem] md:text-[0.8rem] font-medium"
                       style={{
                         fontFamily: "system-ui, -apple-system, sans-serif",
                       }}
@@ -197,8 +188,8 @@ export default function JournalSection() {
                     </span>
                   </div>
 
-                  {/* Date */}
-                  <div className="flex items-center gap-2">
+                  {/* Date - hidden on mobile */}
+                  <div className="hidden md:flex items-center gap-2">
                     <svg
                       width="14"
                       height="14"

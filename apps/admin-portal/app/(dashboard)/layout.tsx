@@ -12,6 +12,7 @@ const nav = [
   { href: "/orders", label: "Orders" },
   { href: "/customers", label: "Customers" },
   { href: "/shipments", label: "Shipments" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export default function DashboardLayout({

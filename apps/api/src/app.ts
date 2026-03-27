@@ -10,6 +10,7 @@ import { ordersRouter } from "./routes/orders.js";
 import { paymentsRouter, handleRazorpayWebhook } from "./routes/payments.js";
 import { adminRouter } from "./routes/admin/index.js";
 import { profileRouter } from "./routes/profile.js";
+import { contactRouter } from "./routes/contact.js";
 
 const app = express();
 
@@ -49,6 +50,7 @@ app.use("/products", productsRouter);
 app.use("/blogs", blogsRouter);
 app.use("/orders", ordersRouter);
 app.use("/payments", paymentsRouter);
+app.use("/contact", contactRouter);
 app.use("/admin", adminRouter);
 
 export { app };

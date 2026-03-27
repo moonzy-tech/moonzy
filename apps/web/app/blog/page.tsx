@@ -23,6 +23,7 @@ function formatDate(value: string) {
   });
 }
 
+
 /* ── Reading time estimate ── */
 function readingTime(text?: string) {
   if (!text) return 1;
@@ -146,27 +147,27 @@ export default async function BlogListPage() {
                 </div>
 
                 {/* Meta row */}
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-3">
+                <div className="mb-3 flex flex-wrap items-center gap-x-2 gap-y-1 sm:gap-x-3">
                   <span
-                    className="text-[#D4A94C] text-xs font-semibold uppercase tracking-[0.15em]"
+                    className="text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-[#D4A94C] sm:text-xs sm:tracking-[0.15em]"
                     style={{
                       fontFamily: "'Instrument Sans', system-ui, sans-serif",
                     }}
                   >
                     {featuredBlog.author}
                   </span>
-                  <span className="w-1 h-1 rounded-full bg-[rgba(200,195,185,0.3)]" />
+                  <span className="h-1 w-1 rounded-full bg-[rgba(200,195,185,0.3)]" />
                   <span
-                    className="text-[rgba(245,240,232,0.45)] text-xs uppercase tracking-[0.1em]"
+                    className="text-[0.65rem] uppercase tracking-[0.08em] text-[rgba(245,240,232,0.45)] sm:text-xs sm:tracking-[0.1em]"
                     style={{
                       fontFamily: "'Instrument Sans', system-ui, sans-serif",
                     }}
                   >
                     {formatDate(featuredBlog.publishDate)}
                   </span>
-                  <span className="w-1 h-1 rounded-full bg-[rgba(200,195,185,0.3)]" />
+                  <span className="h-1 w-1 rounded-full bg-[rgba(200,195,185,0.3)]" />
                   <span
-                    className="text-[rgba(245,240,232,0.45)] text-xs uppercase tracking-[0.1em]"
+                    className="text-[0.65rem] uppercase tracking-[0.08em] text-[rgba(245,240,232,0.45)] sm:text-xs sm:tracking-[0.1em]"
                     style={{
                       fontFamily: "'Instrument Sans', system-ui, sans-serif",
                     }}
@@ -246,7 +247,7 @@ export default async function BlogListPage() {
           BLOG GRID — Magazine-style cards
           ═══════════════════════════════════════════ */}
       <section className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-12 pb-20 md:pb-28">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 md:gap-7">
           {otherBlogs.map((blog, index) => (
             <Link
               href={`/blog/${blog.slug}`}
@@ -270,11 +271,11 @@ export default async function BlogListPage() {
                 </div>
 
                 {/* Card body */}
-                <div className="p-5 md:p-6">
-                  {/* Meta */}
-                  <div className="flex items-center gap-x-2.5 mb-3">
+                <div className="p-2 sm:p-5 md:p-6">
+                  {/* Meta — author only on mobile, date hidden */}
+                  <div className="mb-1.5 sm:mb-3 flex flex-col gap-0.5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-2.5 sm:gap-y-1">
                     <span
-                      className="text-[#D4A94C]/70 text-[0.65rem] font-semibold uppercase tracking-[0.12em]"
+                      className="min-w-0 truncate text-[0.55rem] font-semibold uppercase tracking-[0.06em] text-[#D4A94C]/70 sm:max-w-none sm:text-[0.65rem] sm:tracking-[0.12em]"
                       style={{
                         fontFamily:
                           "'Instrument Sans', system-ui, sans-serif",
@@ -282,9 +283,9 @@ export default async function BlogListPage() {
                     >
                       {blog.author}
                     </span>
-                    <span className="w-0.5 h-0.5 rounded-full bg-[rgba(200,195,185,0.25)]" />
+                    <span className="hidden sm:inline h-1 w-1 shrink-0 rounded-full bg-[rgba(200,195,185,0.25)]" />
                     <span
-                      className="text-[rgba(200,195,185,0.4)] text-[0.65rem] uppercase tracking-[0.1em]"
+                      className="hidden sm:block whitespace-nowrap text-[0.65rem] uppercase tracking-[0.1em] text-[rgba(200,195,185,0.4)] tabular-nums"
                       style={{
                         fontFamily:
                           "'Instrument Sans', system-ui, sans-serif",
@@ -296,7 +297,7 @@ export default async function BlogListPage() {
 
                   {/* Title */}
                   <h2
-                    className="text-[#F5F0E8] text-lg md:text-xl font-normal leading-snug mb-2.5 group-hover:text-[#D4A94C] transition-colors duration-400 line-clamp-2"
+                    className="text-[#F5F0E8] text-xs sm:text-lg md:text-xl font-normal leading-snug mb-1.5 sm:mb-2.5 group-hover:text-[#D4A94C] transition-colors duration-400 line-clamp-2"
                     style={{
                       fontFamily: "'Playfair Display', Georgia, serif",
                     }}
@@ -306,7 +307,7 @@ export default async function BlogListPage() {
 
                   {/* Excerpt */}
                   <p
-                    className="text-[rgba(200,195,185,0.55)] text-[0.82rem] leading-[1.7] line-clamp-2 mb-4"
+                    className="mb-2 text-[0.65rem] leading-[1.5] text-[rgba(200,195,185,0.55)] line-clamp-2 sm:mb-4 sm:text-[0.82rem] sm:leading-[1.7]"
                     style={{
                       fontFamily: "'Instrument Sans', system-ui, sans-serif",
                     }}
@@ -316,14 +317,14 @@ export default async function BlogListPage() {
 
                   {/* Read link */}
                   <span
-                    className="inline-flex items-center gap-1.5 text-[#D4A94C]/60 text-[0.7rem] font-semibold uppercase tracking-[0.12em] group-hover:text-[#D4A94C] group-hover:gap-2.5 transition-all duration-300"
+                    className="inline-flex items-center gap-1 text-[#D4A94C]/60 text-[0.6rem] font-semibold uppercase tracking-[0.1em] group-hover:text-[#D4A94C] group-hover:gap-2 sm:gap-1.5 sm:text-[0.7rem] sm:tracking-[0.12em] transition-all duration-300"
                     style={{
                       fontFamily: "'Instrument Sans', system-ui, sans-serif",
                     }}
                   >
                     Read
                     <svg
-                      className="w-3.5 h-3.5"
+                      className="w-3 h-3 sm:w-3.5 sm:h-3.5"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"

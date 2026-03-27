@@ -7,6 +7,8 @@ import { useAuth } from "@/lib/auth";
 import Navigation from "../components/Navigation";
 import FooterSection from "../components/FooterSection";
 
+const INSTRUMENT_SANS = "'Instrument Sans', system-ui, sans-serif";
+
 type Order = {
   _id: string;
   orderNumber: string;
@@ -49,7 +51,12 @@ export default function OrdersPage() {
       <main className="min-h-screen bg-[#141826]">
         <Navigation />
         <section className="mx-auto max-w-[1200px] px-6 pb-20 pt-28 md:px-10 lg:px-12">
-          <p className="text-sm text-[rgba(200,195,185,0.75)]">Loading your orders...</p>
+          <p
+            className="text-sm text-[rgba(200,195,185,0.75)] antialiased"
+            style={{ fontFamily: INSTRUMENT_SANS }}
+          >
+            Loading your orders...
+          </p>
         </section>
         <FooterSection />
       </main>
@@ -87,7 +94,8 @@ export default function OrdersPage() {
             className="mx-auto max-w-[560px] text-base leading-relaxed text-[rgba(200,195,185,0.6)] md:text-lg"
             style={{ fontFamily: "'Instrument Sans', system-ui, sans-serif" }}
           >
-            Track your Moonzy orders and follow their current status.
+            Every Moonzy order appears here with its date, total, and current
+            status.
           </p>
           <div className="mt-8 flex items-center justify-center gap-3">
             <span className="h-px w-16 bg-[rgba(200,195,185,0.15)]" />
@@ -99,12 +107,18 @@ export default function OrdersPage() {
 
       <section className="mx-auto max-w-[1200px] px-6 pb-20 md:px-10 md:pb-28 lg:px-12">
         {error && (
-          <p className="mb-4 rounded-lg border border-[#D4A94C]/35 bg-[#D4A94C]/10 px-3 py-2 text-sm text-[#D4A94C]">
+          <p
+            className="mb-4 rounded-lg border border-[#D4A94C]/35 bg-[#D4A94C]/10 px-3 py-2 text-sm text-[#D4A94C] antialiased"
+            style={{ fontFamily: INSTRUMENT_SANS }}
+          >
             {error}
           </p>
         )}
 
-        <div className="rounded-[20px] border border-[rgba(200,195,185,0.08)] bg-[#1A1F33]/65 p-6 shadow-[0_8px_40px_rgba(0,0,0,0.3)] sm:p-8">
+        <div
+          className="rounded-[20px] border border-[rgba(200,195,185,0.08)] bg-[#1A1F33]/65 p-6 shadow-[0_8px_40px_rgba(0,0,0,0.3)] sm:p-8 antialiased"
+          style={{ fontFamily: INSTRUMENT_SANS }}
+        >
           {!orders || orders.length === 0 ? (
             <div className="text-sm text-[rgba(200,195,185,0.75)]">
               <p>You don&apos;t have any orders yet.</p>
@@ -121,10 +135,10 @@ export default function OrdersPage() {
             <div className="overflow-x-auto">
               <table className="min-w-full text-sm">
                 <thead>
-                  <tr className="border-b border-[rgba(200,195,185,0.12)] text-left text-xs font-semibold uppercase tracking-[0.18em] text-[rgba(200,195,185,0.55)]">
-                    <th className="py-2 pr-4">Order</th>
-                    <th className="py-2 pr-4">Date</th>
-                    <th className="py-2 pr-4">Total</th>
+                  <tr className="border-b border-[rgba(200,195,185,0.12)] text-left text-xs font-semibold uppercase tracking-[0.16em] text-[rgba(200,195,185,0.55)]">
+                    <th className="py-2 pr-4 tabular-nums">Order</th>
+                    <th className="py-2 pr-4 tabular-nums">Date</th>
+                    <th className="py-2 pr-4 tabular-nums">Total</th>
                     <th className="py-2 pr-4">Status</th>
                   </tr>
                 </thead>
@@ -134,17 +148,17 @@ export default function OrdersPage() {
                       key={order._id}
                       className="border-b border-[rgba(200,195,185,0.08)] last:border-0 hover:bg-white/5"
                     >
-                      <td className="py-3 pr-4 font-semibold text-[#F5F0E8]">
+                      <td className="py-3 pr-4 font-semibold tabular-nums tracking-wide text-[#F5F0E8]">
                         {order.orderNumber}
                       </td>
-                      <td className="py-3 pr-4 text-[rgba(200,195,185,0.72)]">
+                      <td className="py-3 pr-4 tabular-nums tracking-wide text-[rgba(200,195,185,0.72)]">
                         {new Date(order.createdAt).toLocaleDateString("en-IN", {
                           day: "2-digit",
                           month: "short",
                           year: "numeric",
                         })}
                       </td>
-                      <td className="py-3 pr-4 text-[#F5F0E8]">
+                      <td className="py-3 pr-4 tabular-nums tracking-wide font-medium text-[#F5F0E8]">
                         {formatMoney(order.total)}
                       </td>
                       <td className="py-3 pr-4">

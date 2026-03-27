@@ -25,6 +25,7 @@
   --color-background: #E9D5DA;
   --color-foreground: #ffffff;
   --font-berlin: "Berlin Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
 }
 
 html {
@@ -34,10 +35,6 @@ html {
 body {
   font-family: "Berlin Sans", ui-sans-serif, system-ui, sans-serif;
   background-color: #141826; /* dark background for new design */
-}
-
-.font-serif {
-  font-family: 'Playfair Display', Georgia, serif;
 }
 
 @theme inline {

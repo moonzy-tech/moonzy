@@ -1,6 +1,6 @@
 export default function FooterSection() {
   return (
-    <footer id="contact" className="bg-[#1D2235] pt-16 pb-10">
+    <footer id="contact" className="bg-[#1D2235] pt-8 pb-10 lg:pt-16">
       <div className="mx-auto max-w-[1200px] px-6 md:px-10 lg:px-12">
         {/* Top Links Grid */}
         <div className="mb-10 grid grid-cols-2 gap-5 sm:mb-12 sm:gap-8 lg:mb-16 lg:grid-cols-4 lg:gap-16">
@@ -29,10 +29,17 @@ export default function FooterSection() {
 
           {/* Nav Links */}
           <div className="flex flex-col gap-1 sm:gap-2">
-            {["HOME", "SHOP", "ABOUT US", "CONTACT US"].map((link, idx) => (
+            {(
+              [
+                ["HOME", "/"],
+                ["SHOP", "/product"],
+                ["ABOUT US", "/about"],
+                ["CONTACT US", "/contact"],
+              ] as const
+            ).map(([link, href], idx) => (
               <a
                 key={link}
-                href="#"
+                href={href}
                 className={`text-[#F5F0E8] text-xs sm:text-sm font-medium no-underline tracking-wide leading-loose hover:opacity-80 transition-opacity font-[system-ui] ${idx > 1 ? "hidden sm:block" : ""}`}
               >
                 {link}
