@@ -1,3 +1,41 @@
+const HERO_FEATURE_MARQUEE_LABELS = [
+  "Hassle-free cancellations",
+  "100% vegan",
+  "Healthy ingredients",
+] as const;
+
+function HeroFeatureMarqueeStrip() {
+  return (
+    <>
+      {[0, 1].map((loop) => (
+        <div
+          key={loop}
+          className="flex shrink-0 items-center gap-8 md:gap-14 lg:gap-16 xl:gap-24 pr-8 md:pr-14 lg:pr-16"
+        >
+          {HERO_FEATURE_MARQUEE_LABELS.map((label) => (
+            <span key={`${loop}-${label}`} className="inline-flex items-center gap-2 md:gap-2.5">
+              <svg
+                className="h-3 w-3 shrink-0 md:h-3.5 md:w-3.5"
+                viewBox="0 0 14 14"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6.59569 13.9156C6.46281 13.1304 6.11251 12.2849 5.54477 11.3789C4.97703 10.4609 4.1677 9.60926 3.11678 8.82409C2.07794 8.03891 1.0391 7.53761 0.000257046 7.32018V6.55917C1.02702 6.31758 2.0115 5.87064 2.95371 5.21834C3.90799 4.55397 4.70524 3.75672 5.34546 2.82659C5.99775 1.87231 6.4145 0.930103 6.59569 -2.16373e-05H7.3567C7.46542 0.603955 7.68285 1.22605 8.009 1.86627C8.33514 2.4944 8.75189 3.09838 9.25923 3.6782C9.77865 4.24594 10.3585 4.75932 10.9987 5.21834C11.953 5.8948 12.9254 6.34174 13.9159 6.55917V7.32018C13.2515 7.45306 12.563 7.72485 11.8503 8.13555C11.1497 8.54626 10.4974 9.03548 9.8934 9.60322C9.28943 10.1589 8.79417 10.7447 8.40762 11.3608C7.83988 12.2668 7.48957 13.1184 7.3567 13.9156H6.59569Z"
+                  fill="#F5F5F5"
+                />
+              </svg>
+              <span className="whitespace-nowrap font-serif text-xs leading-tight text-white/85 sm:text-sm md:text-base lg:text-[18.12px]">
+                {label}
+              </span>
+            </span>
+          ))}
+        </div>
+      ))}
+    </>
+  );
+}
+
 export default function HeroSection() {
   return (
     <section id="home" className="w-full bg-[#141826] py-2 md:py-4">
@@ -396,13 +434,22 @@ export default function HeroSection() {
             backgroundColor: "#141826",
           }}
         >
+          {/* Marquee sits under the curved SVG so copy clips along the wave */}
+          <div
+            className="hero-marquee-fade-x-curve pointer-events-none absolute inset-0 z-1 flex items-center overflow-hidden"
+            aria-hidden
+          >
+            <div className="hero-marquee-track flex items-center">
+              <HeroFeatureMarqueeStrip />
+            </div>
+          </div>
           <svg
             width="93.0993"
             height="73.0779"
             viewBox="0 0 94 74"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            style={{ position: "absolute", top: 0, left: 0 }}
+            style={{ position: "absolute", top: 0, left: 0, zIndex: 2 }}
           >
             <g clipPath="url(#clip0_33_691)">
               <g clipPath="url(#clip1_33_691)">
@@ -457,55 +504,12 @@ export default function HeroSection() {
             </span>
           </div>
 
-          {/* Right - Features on black bg */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 md:gap-8 lg:gap-16 xl:gap-25">
-            <div className="flex items-center gap-2">
-              <svg
-                className="w-3 h-3 md:w-3.5 md:h-3.5 shrink-0"
-                viewBox="0 0 14 14"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6.59569 13.9156C6.46281 13.1304 6.11251 12.2849 5.54477 11.3789C4.97703 10.4609 4.1677 9.60926 3.11678 8.82409C2.07794 8.03891 1.0391 7.53761 0.000257046 7.32018V6.55917C1.02702 6.31758 2.0115 5.87064 2.95371 5.21834C3.90799 4.55397 4.70524 3.75672 5.34546 2.82659C5.99775 1.87231 6.4145 0.930103 6.59569 -2.16373e-05H7.3567C7.46542 0.603955 7.68285 1.22605 8.009 1.86627C8.33514 2.4944 8.75189 3.09838 9.25923 3.6782C9.77865 4.24594 10.3585 4.75932 10.9987 5.21834C11.953 5.8948 12.9254 6.34174 13.9159 6.55917V7.32018C13.2515 7.45306 12.563 7.72485 11.8503 8.13555C11.1497 8.54626 10.4974 9.03548 9.8934 9.60322C9.28943 10.1589 8.79417 10.7447 8.40762 11.3608C7.83988 12.2668 7.48957 13.1184 7.3567 13.9156H6.59569Z"
-                  fill="#F5F5F5"
-                />
-              </svg>
-              <span className="text-white/85 font-serif text-xs sm:text-sm md:text-base lg:text-[18.12px] leading-tight">
-                Hassle-free cancellations
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <svg
-                className="w-3 h-3 md:w-3.5 md:h-3.5 shrink-0"
-                viewBox="0 0 14 14"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6.59569 13.9156C6.46281 13.1304 6.11251 12.2849 5.54477 11.3789C4.97703 10.4609 4.1677 9.60926 3.11678 8.82409C2.07794 8.03891 1.0391 7.53761 0.000257046 7.32018V6.55917C1.02702 6.31758 2.0115 5.87064 2.95371 5.21834C3.90799 4.55397 4.70524 3.75672 5.34546 2.82659C5.99775 1.87231 6.4145 0.930103 6.59569 -2.16373e-05H7.3567C7.46542 0.603955 7.68285 1.22605 8.009 1.86627C8.33514 2.4944 8.75189 3.09838 9.25923 3.6782C9.77865 4.24594 10.3585 4.75932 10.9987 5.21834C11.953 5.8948 12.9254 6.34174 13.9159 6.55917V7.32018C13.2515 7.45306 12.563 7.72485 11.8503 8.13555C11.1497 8.54626 10.4974 9.03548 9.8934 9.60322C9.28943 10.1589 8.79417 10.7447 8.40762 11.3608C7.83988 12.2668 7.48957 13.1184 7.3567 13.9156H6.59569Z"
-                  fill="#F5F5F5"
-                />
-              </svg>
-              <span className="text-white/85 font-serif text-xs sm:text-sm md:text-base lg:text-[18.12px] leading-tight">
-                100% vegan
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <svg
-                className="w-3 h-3 md:w-3.5 md:h-3.5 shrink-0"
-                viewBox="0 0 14 14"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6.59569 13.9156C6.46281 13.1304 6.11251 12.2849 5.54477 11.3789C4.97703 10.4609 4.1677 9.60926 3.11678 8.82409C2.07794 8.03891 1.0391 7.53761 0.000257046 7.32018V6.55917C1.02702 6.31758 2.0115 5.87064 2.95371 5.21834C3.90799 4.55397 4.70524 3.75672 5.34546 2.82659C5.99775 1.87231 6.4145 0.930103 6.59569 -2.16373e-05H7.3567C7.46542 0.603955 7.68285 1.22605 8.009 1.86627C8.33514 2.4944 8.75189 3.09838 9.25923 3.6782C9.77865 4.24594 10.3585 4.75932 10.9987 5.21834C11.953 5.8948 12.9254 6.34174 13.9159 6.55917V7.32018C13.2515 7.45306 12.563 7.72485 11.8503 8.13555C11.1497 8.54626 10.4974 9.03548 9.8934 9.60322C9.28943 10.1589 8.79417 10.7447 8.40762 11.3608C7.83988 12.2668 7.48957 13.1184 7.3567 13.9156H6.59569Z"
-                  fill="#F5F5F5"
-                />
-              </svg>
-              <span className="text-white/85 font-serif text-xs sm:text-sm md:text-base lg:text-[18.12px] leading-tight">
-                Healthy ingredients
-              </span>
+          {/* Below lg the black+curve column is hidden — marquee only here */}
+          <div className="w-full overflow-hidden lg:hidden">
+            <div className="hero-marquee-fade-x pointer-events-none flex min-h-5 items-center overflow-hidden" aria-hidden>
+              <div className="hero-marquee-track flex items-center">
+                <HeroFeatureMarqueeStrip />
+              </div>
             </div>
           </div>
             </div>

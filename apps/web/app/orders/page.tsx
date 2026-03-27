@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { api } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
+import Navigation from "../components/Navigation";
+import FooterSection from "../components/FooterSection";
 
 type Order = {
   _id: string;
@@ -44,10 +46,12 @@ export default function OrdersPage() {
 
   if (authLoading || (loading && !orders)) {
     return (
-      <main className="min-h-screen bg-[#FDF5E5] pt-28 pb-20 text-[#13241A]">
-        <section className="mx-auto max-w-6xl px-6 lg:px-10">
-          <p className="text-sm text-[#4C4A3F]">Loading your orders…</p>
+      <main className="min-h-screen bg-[#141826]">
+        <Navigation />
+        <section className="mx-auto max-w-[1200px] px-6 pb-20 pt-28 md:px-10 lg:px-12">
+          <p className="text-sm text-[rgba(200,195,185,0.75)]">Loading your orders...</p>
         </section>
+        <FooterSection />
       </main>
     );
   }
@@ -57,32 +61,57 @@ export default function OrdersPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#FDF5E5] pt-28 pb-20 text-[#13241A]">
-      <section className="mx-auto max-w-6xl px-6 lg:px-10">
-        <p className="text-xs uppercase tracking-[0.3em] text-[#A45715] md:text-sm">
-          Moonzy
-        </p>
-        <h1 className="mt-3 text-3xl font-bold leading-tight text-[#1E3B2A] sm:text-4xl md:text-5xl">
-          Your orders
-        </h1>
-        <p className="mt-3 text-sm leading-relaxed text-[#4C4A3F] sm:text-base">
-          Track your Moonzy orders and see their current status.
-        </p>
+    <main className="min-h-screen bg-[#141826]">
+      <Navigation />
+      <section className="relative overflow-hidden pt-24 pb-16 md:pb-20">
+        <div
+          className="pointer-events-none absolute top-0 left-1/2 h-[500px] w-[800px] -translate-x-1/2 opacity-[0.07]"
+          style={{
+            background: "radial-gradient(ellipse at center, #D4A94C 0%, transparent 70%)",
+          }}
+        />
+        <div className="relative mx-auto max-w-[1200px] px-6 text-center md:px-10 lg:px-12">
+          <p
+            className="mb-5 text-xs font-semibold uppercase tracking-[0.25em] text-[#D4A94C]"
+            style={{ fontFamily: "'Instrument Sans', system-ui, sans-serif" }}
+          >
+            Moonzy
+          </p>
+          <h1
+            className="mb-5 text-5xl font-normal text-[#F5F0E8] md:mb-6 md:text-6xl lg:text-7xl"
+            style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+          >
+            Your Orders
+          </h1>
+          <p
+            className="mx-auto max-w-[560px] text-base leading-relaxed text-[rgba(200,195,185,0.6)] md:text-lg"
+            style={{ fontFamily: "'Instrument Sans', system-ui, sans-serif" }}
+          >
+            Track your Moonzy orders and follow their current status.
+          </p>
+          <div className="mt-8 flex items-center justify-center gap-3">
+            <span className="h-px w-16 bg-[rgba(200,195,185,0.15)]" />
+            <span className="h-1.5 w-1.5 rotate-45 border border-[#D4A94C]/40" />
+            <span className="h-px w-16 bg-[rgba(200,195,185,0.15)]" />
+          </div>
+        </div>
+      </section>
 
+      <section className="mx-auto max-w-[1200px] px-6 pb-20 md:px-10 md:pb-28 lg:px-12">
         {error && (
-          <p className="mt-4 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+          <p className="mb-4 rounded-lg border border-[#D4A94C]/35 bg-[#D4A94C]/10 px-3 py-2 text-sm text-[#D4A94C]">
             {error}
           </p>
         )}
 
-        <div className="mt-8 rounded-3xl bg-white/95 p-6 shadow-[0_22px_60px_rgba(0,0,0,0.08)] sm:p-8">
+        <div className="rounded-[20px] border border-[rgba(200,195,185,0.08)] bg-[#1A1F33]/65 p-6 shadow-[0_8px_40px_rgba(0,0,0,0.3)] sm:p-8">
           {!orders || orders.length === 0 ? (
-            <div className="text-sm text-[#4C4A3F]">
+            <div className="text-sm text-[rgba(200,195,185,0.75)]">
               <p>You don&apos;t have any orders yet.</p>
               <div className="mt-4 flex flex-wrap gap-3">
                 <Link
                   href="/product"
-                  className="inline-flex items-center justify-center rounded-full bg-[#1E3B2A] px-6 py-2 text-[0.7rem] uppercase tracking-[0.22em] text-white shadow-[0_14px_35px_rgba(0,0,0,0.3)] transition hover:-translate-y-0.5 hover:shadow-[0_20px_55px_rgba(0,0,0,0.4)]"
+                  className="inline-flex items-center justify-center rounded-full bg-[#D4A94C] px-6 py-2 text-[0.7rem] uppercase tracking-[0.22em] text-[#141826] shadow-[0_14px_35px_rgba(0,0,0,0.3)] transition hover:-translate-y-0.5 hover:shadow-[0_20px_55px_rgba(0,0,0,0.4)]"
                 >
                   Shop flavours
                 </Link>
@@ -92,7 +121,7 @@ export default function OrdersPage() {
             <div className="overflow-x-auto">
               <table className="min-w-full text-sm">
                 <thead>
-                  <tr className="border-b border-[#E1D4C1] text-left text-xs font-semibold uppercase tracking-[0.18em] text-[#7A6C54]">
+                  <tr className="border-b border-[rgba(200,195,185,0.12)] text-left text-xs font-semibold uppercase tracking-[0.18em] text-[rgba(200,195,185,0.55)]">
                     <th className="py-2 pr-4">Order</th>
                     <th className="py-2 pr-4">Date</th>
                     <th className="py-2 pr-4">Total</th>
@@ -103,31 +132,31 @@ export default function OrdersPage() {
                   {orders.map((order) => (
                     <tr
                       key={order._id}
-                      className="border-b border-[#F1E5D4] last:border-0 hover:bg-[#FDF5E5]"
+                      className="border-b border-[rgba(200,195,185,0.08)] last:border-0 hover:bg-white/5"
                     >
-                      <td className="py-3 pr-4 font-semibold text-[#1E3B2A]">
+                      <td className="py-3 pr-4 font-semibold text-[#F5F0E8]">
                         {order.orderNumber}
                       </td>
-                      <td className="py-3 pr-4 text-[#4C4A3F]">
+                      <td className="py-3 pr-4 text-[rgba(200,195,185,0.72)]">
                         {new Date(order.createdAt).toLocaleDateString("en-IN", {
                           day: "2-digit",
                           month: "short",
                           year: "numeric",
                         })}
                       </td>
-                      <td className="py-3 pr-4 text-[#1E3B2A]">
+                      <td className="py-3 pr-4 text-[#F5F0E8]">
                         {formatMoney(order.total)}
                       </td>
                       <td className="py-3 pr-4">
                         <span
                           className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold capitalize ${
                             order.status === "delivered"
-                              ? "bg-emerald-100 text-emerald-800"
+                              ? "bg-emerald-200/20 text-emerald-300"
                               : order.status === "cancelled"
-                                ? "bg-red-100 text-red-700"
+                                ? "bg-red-200/20 text-red-300"
                                 : order.status === "paid" || order.status === "processing"
-                                  ? "bg-amber-100 text-amber-800"
-                                  : "bg-slate-100 text-slate-700"
+                                  ? "bg-[#D4A94C]/20 text-[#D4A94C]"
+                                  : "bg-slate-200/20 text-slate-200"
                           }`}
                         >
                           {order.status}
@@ -141,6 +170,7 @@ export default function OrdersPage() {
           )}
         </div>
       </section>
+      <FooterSection />
     </main>
   );
 }

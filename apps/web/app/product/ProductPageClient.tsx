@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { addToCart } from "@/lib/cart";
 import { products, type ProductId } from "@/lib/products";
@@ -22,6 +22,14 @@ export default function ProductPageClient() {
   const [showIngredients, setShowIngredients] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const { showToast } = useToast();
+
+  useEffect(() => {
+    const nextId: ProductId =
+      (products.find((p) => p.id === flavorParam)?.id as ProductId | undefined) ??
+      "peri";
+    setActiveId(nextId);
+    setQuantity(1);
+  }, [flavorParam]);
 
   const activeProduct = products.find((p) => p.id === activeId) ?? products[0];
   const otherProducts = products.filter((p) => p.id !== activeId);
@@ -44,12 +52,12 @@ export default function ProductPageClient() {
   ];
 
   return (
-    <main style={{ backgroundColor: "#1E2030", minHeight: "100vh" }}>
+    <main className="min-h-screen bg-[#1E2030]">
       <Navigation />
 
       {/* ─── Product Hero ─── */}
-      <section style={{ maxWidth: "1080px", margin: "0 auto", padding: "100px 24px 60px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1.15fr 1fr", gap: "48px", alignItems: "start" }}>
+      <section className="mx-auto max-w-[1080px] px-4 sm:px-6 md:px-8 lg:px-6 pt-24 md:pt-[100px] pb-12 md:pb-[60px]">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] gap-8 lg:gap-12 items-start">
 
           {/* Left — Images */}
           <div className="opacity-0 animate-fadeInUp" style={{ animationDelay: '100ms', animationFillMode: 'forwards' }}>
@@ -97,11 +105,11 @@ export default function ProductPageClient() {
 
           {/* Right — Product Info */}
           <div className="opacity-0 animate-fadeInUp" style={{ display: "flex", flexDirection: "column", gap: "22px", animationDelay: '300ms', animationFillMode: 'forwards' }}>
-            <h1 style={{ fontFamily: "'Playfair Display', Georgia, serif", color: "#F5F0E8", fontSize: "3.4rem", fontWeight: 700, lineHeight: 1.05, letterSpacing: "0.03em", textTransform: "uppercase" }}>
+            <h1 style={{ fontFamily: "'Playfair Display', Georgia, serif", color: "#F5F0E8", fontSize: "clamp(2rem, 8vw, 3.4rem)", fontWeight: 700, lineHeight: 1.05, letterSpacing: "0.03em", textTransform: "uppercase" }}>
               {activeProduct.name}
             </h1>
 
-            <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between" }}>
+            <div className="flex flex-wrap items-baseline justify-between gap-3">
               <div style={{ display: "flex", alignItems: "baseline", gap: "14px" }}>
                 <span style={{ fontFamily: "system-ui, sans-serif", color: "#F5F0E8", fontSize: "1.15rem", fontWeight: 700 }}>₹{activeProduct.price}.00</span>
                 <span style={{ fontFamily: "system-ui, sans-serif", color: "rgba(200,195,185,0.4)", fontSize: "1rem", textDecoration: "line-through" }}>₹{Math.round(activeProduct.price * 1.4)}.00</span>
@@ -113,18 +121,49 @@ export default function ProductPageClient() {
               {activeProduct.description} {activeProduct.notes}
             </p>
 
-            {/* Quantity + Buy Now */}
-            <div style={{ display: "flex", gap: "14px", alignItems: "stretch" }}>
-              <div style={{ display: "flex", alignItems: "center", backgroundColor: "#F5F0E8", borderRadius: "999px", padding: "0 4px", flex: "0 0 190px", height: "52px" }}>
-                <button type="button" onClick={() => setQuantity((q) => Math.max(1, q - 1))} style={{ width: "46px", height: "44px", borderRadius: "50%", border: "none", background: "transparent", color: "#1E2030", fontSize: "1.3rem", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 300 }}>−</button>
-                <span style={{ flex: 1, textAlign: "center", fontFamily: "system-ui, sans-serif", color: "#1E2030", fontSize: "1.05rem", fontWeight: 600 }}>{quantity}</span>
-                <button type="button" onClick={() => setQuantity((q) => Math.min(10, q + 1))} style={{ width: "46px", height: "44px", borderRadius: "50%", border: "none", background: "transparent", color: "#1E2030", fontSize: "1.3rem", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 300 }}>+</button>
+            {/* Quantity + Buy Now — mobile: one row (compact qty + flex BUY NOW); desktop: same row */}
+            <div className="flex flex-row gap-2.5 sm:gap-[14px] items-stretch">
+              <div
+                className="flex shrink-0 items-center bg-[#F5F0E8] rounded-full px-1 h-12 w-[132px] sm:w-[190px]"
+                style={{ display: "flex", alignItems: "center" }}
+              >
+                <button
+                  type="button"
+                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-0 bg-transparent text-[#1E2030] text-xl font-light cursor-pointer"
+                  aria-label="Decrease quantity"
+                >
+                  −
+                </button>
+                <span className="min-w-[1.5ch] flex-1 text-center font-semibold text-[#1E2030] text-[0.95rem]" style={{ fontFamily: "system-ui, sans-serif" }}>
+                  {quantity}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setQuantity((q) => Math.min(10, q + 1))}
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-0 bg-transparent text-[#1E2030] text-xl font-light cursor-pointer"
+                  aria-label="Increase quantity"
+                >
+                  +
+                </button>
               </div>
-              <button type="button" onClick={handleAddToCart} className="transition-all duration-300 hover:scale-[1.02] hover:shadow-xl" style={{ flex: 1, borderRadius: "999px", border: "none", backgroundColor: "#F5F0E8", color: "#1E2030", fontFamily: "'Instrument Sans', system-ui, sans-serif", fontSize: "0.85rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", height: "52px" }}>BUY NOW</button>
+              <button
+                type="button"
+                onClick={handleAddToCart}
+                className="min-h-12 min-w-0 flex-1 rounded-full border-0 bg-[#F5F0E8] px-4 text-[0.8rem] font-bold uppercase tracking-widest text-[#1E2030] transition-all duration-300 hover:scale-[1.02] hover:shadow-xl sm:text-[0.85rem]"
+                style={{ fontFamily: "'Instrument Sans', system-ui, sans-serif" }}
+              >
+                BUY NOW
+              </button>
             </div>
 
             {/* Add to Cart */}
-            <button type="button" onClick={handleAddToCart} className="transition-all duration-300 hover:scale-[1.02] hover:shadow-xl" style={{ width: "100%", padding: "16px 24px", borderRadius: "999px", border: "none", backgroundColor: "#D4A94C", color: "#1E2030", fontFamily: "'Instrument Sans', system-ui, sans-serif", fontSize: "0.85rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", height: "52px" }}>
+            <button
+              type="button"
+              onClick={handleAddToCart}
+              className="flex h-12 w-full items-center justify-center gap-2 rounded-full border-0 bg-[#D4A94C] px-5 text-[0.8rem] font-bold uppercase tracking-widest text-[#1E2030] transition-all duration-300 hover:scale-[1.02] hover:shadow-xl sm:text-[0.85rem]"
+              style={{ fontFamily: "'Instrument Sans', system-ui, sans-serif" }}
+            >
               🛒 ADD TO CART
             </button>
 
@@ -153,11 +192,11 @@ export default function ProductPageClient() {
       </section>
 
       {/* ─── FAQ Section ─── */}
-      <section style={{ backgroundColor: "#1E2030", padding: "48px 0 64px" }}>
-        <div style={{ maxWidth: "1080px", margin: "0 auto", padding: "0 24px", display: "grid", gridTemplateColumns: "380px 1fr", gap: "24px", alignItems: "stretch" }}>
+      <section className="bg-[#1E2030] py-12 md:py-16">
+        <div className="mx-auto grid max-w-[1080px] grid-cols-1 lg:grid-cols-[380px_1fr] gap-5 md:gap-6 items-stretch px-4 sm:px-6 md:px-8 lg:px-6">
 
           {/* Left — CTA Card */}
-          <div className="opacity-0 animate-fadeInUp transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl" style={{ backgroundColor: "#2B2D3A", borderRadius: "24px", padding: "60px 40px 50px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: "28px", animationDelay: '100ms', animationFillMode: 'forwards', alignSelf: "start", position: "sticky", top: "100px" }}>
+          <div className="opacity-0 animate-fadeInUp transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl lg:sticky lg:top-[100px]" style={{ backgroundColor: "#2B2D3A", borderRadius: "24px", padding: "40px 24px 34px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: "22px", animationDelay: '100ms', animationFillMode: 'forwards', alignSelf: "start" }}>
             {/* Icon */}
             <div style={{ marginBottom: "12px" }}>
               <svg width="64" height="75" viewBox="0 0 64 64" fill="none">
@@ -169,7 +208,7 @@ export default function ProductPageClient() {
               </svg>
             </div>
 
-            <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", color: "#F5F5F0", fontSize: "2.25rem", fontWeight: 400, lineHeight: 1.25, margin: 0 }}>
+            <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", color: "#F5F5F0", fontSize: "clamp(1.6rem, 5vw, 2.25rem)", fontWeight: 400, lineHeight: 1.25, margin: 0 }}>
               Everything Parents<br />Want to Know
             </h2>
 
@@ -177,7 +216,7 @@ export default function ProductPageClient() {
               Thoughtful answers about our ingredients, recipes, and processes—designed to give parents peace of mind at every step.
             </p>
 
-            <button className="transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:brightness-110" style={{ width: "100%", backgroundColor: "#D4A94C", color: "#2B2D3A", padding: "18px 40px", borderRadius: "999px", border: "none", fontFamily: "system-ui, -apple-system, sans-serif", fontSize: "0.9rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", cursor: "pointer", marginTop: "12px" }}>
+            <button className="transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:brightness-110" style={{ width: "100%", backgroundColor: "#D4A94C", color: "#2B2D3A", padding: "15px 24px", borderRadius: "999px", border: "none", fontFamily: "system-ui, -apple-system, sans-serif", fontSize: "0.82rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", cursor: "pointer", marginTop: "12px" }}>
               SHOOT A DIRECT
             </button>
           </div>
@@ -242,13 +281,13 @@ export default function ProductPageClient() {
       </section>
 
       {/* ─── You May Also Like ─── */}
-      <section style={{ backgroundColor: "#1E2030", padding: "48px 0 72px" }}>
-        <div style={{ maxWidth: "1080px", margin: "0 auto", padding: "0 24px" }}>
-          <div className="opacity-0 animate-fadeInUp" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "32px", animationDelay: '100ms', animationFillMode: 'forwards' }}>
+      <section className="bg-[#1E2030] py-12 md:py-[72px]">
+        <div className="mx-auto max-w-[1080px] px-4 sm:px-6 md:px-8 lg:px-6">
+          <div className="opacity-0 animate-fadeInUp flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8" style={{ animationDelay: '100ms', animationFillMode: 'forwards' }}>
             <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", color: "#F5F0E8", fontSize: "2rem", fontWeight: 500 }}>You may also like</h2>
             <button className="transition-all duration-300 hover:scale-[1.05] hover:bg-white hover:text-[#1E2030]" style={{ border: "1.5px solid rgba(200,195,185,0.2)", borderRadius: "999px", padding: "9px 24px", background: "transparent", color: "#F5F0E8", fontFamily: "'Instrument Sans', system-ui, sans-serif", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>VIEW ALL</button>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "20px" }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {otherProducts.map((product, index) => (
               <Link key={product.id} href={`/product?flavor=${product.id}`} className="group" style={{ textDecoration: "none" }}>
                 <div className="opacity-0 animate-fadeInUp transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl hover:-translate-y-1 hover:border-[#D4A94C]" style={{ border: "1px solid rgba(200,195,185,0.12)", borderRadius: "18px", padding: "12px", paddingBottom: "0", backgroundColor: "rgba(26,28,46,0.5)", animationDelay: `${300 + index * 150}ms`, animationFillMode: 'forwards' }}>

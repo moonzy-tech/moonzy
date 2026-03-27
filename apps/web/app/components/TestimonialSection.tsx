@@ -6,7 +6,7 @@ export default function TestimonialSection() {
     >
       {/* Owl (decorative) - placed left without affecting centered text */}
       <div
-        className="absolute left-2 md:left-4 lg:left-15 top-1/2 -translate-y-1/2 w-32 h-40 md:w-48 md:h-60 lg:w-[255px] lg:h-[336px] pointer-events-none opacity-60 md:opacity-80 lg:opacity-100 hidden sm:block animate-float"
+        className="absolute left-2 md:left-4 lg:left-[max(1rem,calc(50%-700px))] top-1/2 -translate-y-1/2 w-32 h-40 md:w-48 md:h-60 lg:w-[255px] lg:h-[336px] pointer-events-none opacity-60 md:opacity-80 lg:opacity-100 hidden sm:block animate-float"
       >
         <img
           src="/owl.png"

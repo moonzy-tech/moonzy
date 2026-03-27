@@ -4,6 +4,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
+
 @font-face {
   font-family: "Berlin Sans";
   src: url("/fonts/BRLNSR.TTF") format("truetype");
@@ -265,4 +266,105 @@ body {
 
 .animate-scaleIn {
   animation: scaleIn 0.6s ease-out;
+}
+
+/* Hero footer: infinite horizontal marquee (duplicate content; translate -50%) */
+@keyframes hero-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.hero-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: hero-marquee 32s linear infinite;
+  will-change: transform;
+}
+
+/* Soft fade at horizontal ends so ticker doesn’t cut off harshly */
+.hero-marquee-fade-x {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 1.25rem,
+    #000 calc(100% - 1.25rem),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 1.25rem,
+    #000 calc(100% - 1.25rem),
+    transparent 100%
+  );
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+}
+
+@media (min-width: 768px) {
+  .hero-marquee-fade-x {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 2rem,
+      #000 calc(100% - 2rem),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 2rem,
+      #000 calc(100% - 2rem),
+      transparent 100%
+    );
+  }
+}
+
+/* Left fade spans the wave SVG (~94px) + buffer so type dissolves before the curved clip */
+.hero-marquee-fade-x-curve {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 clamp(6.5rem, 18vw, 11.5rem),
+    #000 calc(100% - 2.75rem),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 clamp(6.5rem, 18vw, 11.5rem),
+    #000 calc(100% - 2.75rem),
+    transparent 100%
+  );
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+}
+
+@media (min-width: 1024px) {
+  .hero-marquee-fade-x-curve {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 clamp(7.5rem, 14vw, 15rem),
+      #000 calc(100% - 3.25rem),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 clamp(7.5rem, 14vw, 15rem),
+      #000 calc(100% - 3.25rem),
+      transparent 100%
+    );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-marquee-track {
+    animation: none;
+  }
 }
