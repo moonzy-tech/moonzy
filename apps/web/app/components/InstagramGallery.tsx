@@ -88,7 +88,7 @@ export default function InstagramGallery() {
             return (
               <div
                 key={index}
-                className="absolute rounded-2xl flex flex-col items-center justify-center gap-4 md:gap-5 p-6 md:p-9 cursor-pointer transition-all duration-500 hover:scale-110 hover:z-50 hover:shadow-[0_30px_80px_rgba(0,0,0,0.6)]"
+                className="absolute rounded-2xl flex flex-col items-center justify-center gap-4 md:gap-5 p-6 md:p-9 cursor-pointer transition-all duration-500 hover:scale-[1.03] hover:z-50 hover:shadow-[0_30px_80px_rgba(0,0,0,0.6)]"
                 style={{
                   width: `${CARD_W}px`,
                   height: `${CARD_H}px`,
@@ -169,7 +169,7 @@ export default function InstagramGallery() {
           return (
             <div
               key={index}
-              className={`absolute rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 hover:scale-110 hover:z-50 hover:shadow-[0_30px_80px_rgba(0,0,0,0.6)] ${isOuter ? 'hidden md:block' : ''}`}
+              className={`absolute rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 hover:scale-[1.03] hover:z-50 hover:shadow-[0_30px_80px_rgba(0,0,0,0.6)] ${isOuter ? 'hidden md:block' : ''}`}
               style={{
                 width: `${CARD_W}px`,
                 height: `${CARD_H}px`,

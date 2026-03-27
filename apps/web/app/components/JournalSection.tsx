@@ -26,7 +26,7 @@ export default function JournalSection() {
   ];
 
   return (
-    <section className="bg-[#141826] py-12 md:py-16 lg:py-18 xl:py-20">
+    <section id="blogs" className="bg-[#141826] py-12 md:py-16 lg:py-18 xl:py-20">
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-12">
         {/* Header Row */}
         <div
@@ -47,7 +47,7 @@ export default function JournalSection() {
             }}
           >
             <button
-              className="bg-[#15172a] text-[#F5F0E8] px-6 md:px-8 py-2 md:py-2.5 rounded-full text-sm md:text-[0.95rem] font-serif font-semibold cursor-pointer border-none transition-all duration-300 hover:scale-110 hover:shadow-xl"
+              className="bg-[#15172a] text-[#F5F0E8] px-6 md:px-8 py-2 md:py-2.5 rounded-full text-sm md:text-[0.95rem] font-serif font-semibold cursor-pointer border-none transition-all duration-300 hover:scale-[1.03] hover:shadow-xl"
               style={{
                 letterSpacing: "0.02em",
               }}
@@ -64,7 +64,7 @@ export default function JournalSection() {
           {posts.map((post, index) => (
             <div
               key={index}
-              className="rounded-2xl md:rounded-3xl lg:rounded-[20px] overflow-hidden cursor-pointer relative bg-[#1E2235] transform transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:-translate-y-2 opacity-0 animate-fadeInUp"
+              className="rounded-2xl md:rounded-3xl lg:rounded-[20px] overflow-hidden cursor-pointer relative bg-[#1E2235] transform transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:-translate-y-1 opacity-0 animate-fadeInUp"
               style={{
                 animationDelay: `${index * 200}ms`,
                 animationFillMode: 'forwards'

@@ -127,7 +127,7 @@ export default function ProductsSection() {
             >
               {/* Card Container */}
               <div
-                className="border border-[rgba(200,195,185,0.18)] rounded-2xl md:rounded-3xl lg:rounded-[22px] p-3 md:p-3.5 lg:p-[14px] mb-3 md:mb-4 transform transition-all duration-500 group-hover:scale-105 group-hover:shadow-2xl group-hover:-translate-y-2"
+                className="border border-[rgba(200,195,185,0.18)] rounded-2xl md:rounded-3xl lg:rounded-[22px] p-3 md:p-3.5 lg:p-[14px] mb-3 md:mb-4 transform transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-2xl group-hover:-translate-y-1"
                 style={{
                   background: "rgba(30, 33, 48, 0.6)",
                 }}
@@ -144,7 +144,7 @@ export default function ProductsSection() {
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3"
+                    className="transition-transform duration-500 group-hover:scale-[1.02] group-hover:rotate-2"
                     style={{
                       width: "75%",
                       height: "90%",

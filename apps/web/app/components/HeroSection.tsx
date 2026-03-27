@@ -41,8 +41,9 @@ export default function HeroSection() {
             <br className="hidden sm:block" />a problem. It&apos;s your time.
           </p>
 
-          <button
-            className="hover:brightness-110 transition-all cursor-pointer text-xs sm:text-sm md:text-[15.1px] px-8 sm:px-12 md:px-14 lg:px-[58px] py-1.5 md:py-[7px] hover:scale-110 hover:shadow-2xl animate-float"
+          <a
+            href="#shop"
+            className="hover:brightness-110 transition-all cursor-pointer text-xs sm:text-sm md:text-[15.1px] px-8 sm:px-12 md:px-14 lg:px-[58px] py-1.5 md:py-[7px] hover:scale-[1.03] hover:shadow-2xl animate-float"
             style={{
               backgroundColor: "#F4C040",
               color: "#1a1a1a",
@@ -58,10 +59,11 @@ export default function HeroSection() {
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
+              textDecoration: "none",
             }}
           >
             Shop the Night
-          </button>
+          </a>
         </div>
 
         {/* Right Side - Bento Grid */}
@@ -449,9 +451,9 @@ export default function HeroSection() {
             </svg>
             <span className="text-white text-xs sm:text-sm md:text-base lg:text-[18.12px] font-medium leading-tight">
               Join thousands of healthy kids,{" "}
-              <span className="underline cursor-pointer">
+              <a href="#blogs" className="underline cursor-pointer">
                 Read More
-              </span>
+              </a>
             </span>
           </div>
 

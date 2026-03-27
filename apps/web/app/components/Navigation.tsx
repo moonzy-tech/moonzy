@@ -35,8 +35,12 @@ export default function Navigation() {
 
   useEffect(() => {
     const syncScrolledState = () => {
-      const shouldBeScrolled = window.scrollY > 50;
-      setIsScrolled((prev) => (prev === shouldBeScrolled ? prev : shouldBeScrolled));
+      const y = window.scrollY;
+      setIsScrolled((prev) => {
+        if (!prev && y > 72) return true;
+        if (prev && y < 36) return false;
+        return prev;
+      });
     };
 
     // Run immediately and again after hash-based scroll settles.
@@ -56,10 +60,10 @@ export default function Navigation() {
   }, [pathname]);
 
   return (
-    <nav className={`sticky top-2 z-50 bg-[#F5F5F0] rounded-[24px] md:rounded-[32px] mx-auto mt-3 md:mt-[13px] px-4 md:px-8 lg:px-12 flex flex-col md:flex-row items-center justify-between md:justify-end box-border transition-[width,max-width,height,padding,box-shadow] duration-300 ease-out ${
+    <nav className={`sticky top-2 z-50 bg-[#F5F5F0] rounded-[24px] md:rounded-[32px] mx-auto mt-3 md:mt-[13px] px-4 md:px-8 lg:px-12 h-auto md:h-[75px] py-4 md:py-0 flex flex-col md:flex-row items-center justify-between md:justify-end box-border transition-[width,max-width,box-shadow] duration-300 ease-out ${
       isScrolled
-        ? "w-[calc(100%-4rem)] md:w-[calc(100%-8rem)] lg:w-[calc(100%-12rem)] max-w-[1100px] h-auto md:h-[60px] py-2 md:py-0 shadow-2xl"
-        : "w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] lg:w-[calc(100%-4rem)] max-w-[1397px] h-auto md:h-[85px] py-4 md:py-0 shadow-sm"
+        ? "w-[calc(100%-4rem)] md:w-[calc(100%-8rem)] lg:w-[calc(100%-12rem)] max-w-[1100px] shadow-2xl"
+        : "w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] lg:w-[calc(100%-4rem)] max-w-[1397px] shadow-sm"
     }`}>
       {/* Mobile: Hamburger + Cart */}
       <div className="w-full md:hidden flex items-center justify-between">
@@ -114,28 +118,28 @@ export default function Navigation() {
         <button
           type="button"
           onClick={() => handleNavClick("home")}
-          className="text-black font-serif text-sm md:text-base tracking-wide hover:opacity-70 transition-all duration-300 hover:scale-110 whitespace-nowrap w-full md:w-auto text-center md:text-left py-2 md:py-0"
+          className="text-black font-serif text-sm md:text-base tracking-wide hover:opacity-70 transition-all duration-300 hover:scale-[1.03] whitespace-nowrap w-full md:w-auto text-center md:text-left py-2 md:py-0"
         >
           HOME
         </button>
         <button
           type="button"
           onClick={() => handleNavClick("shop")}
-          className="text-black font-serif text-sm md:text-base tracking-wide hover:opacity-70 transition-all duration-300 hover:scale-110 whitespace-nowrap w-full md:w-auto text-center md:text-left py-2 md:py-0"
+          className="text-black font-serif text-sm md:text-base tracking-wide hover:opacity-70 transition-all duration-300 hover:scale-[1.03] whitespace-nowrap w-full md:w-auto text-center md:text-left py-2 md:py-0"
         >
           SHOP
         </button>
         <button
           type="button"
           onClick={() => handleNavClick("about")}
-          className="text-black font-serif text-sm md:text-base tracking-wide hover:opacity-70 transition-all duration-300 hover:scale-110 whitespace-nowrap w-full md:w-auto text-center md:text-left py-2 md:py-0"
+          className="text-black font-serif text-sm md:text-base tracking-wide hover:opacity-70 transition-all duration-300 hover:scale-[1.03] whitespace-nowrap w-full md:w-auto text-center md:text-left py-2 md:py-0"
         >
           ABOUT US
         </button>
         <button
           type="button"
           onClick={() => handleNavClick("contact")}
-          className="text-black font-serif text-sm md:text-base tracking-wide hover:opacity-70 transition-all duration-300 hover:scale-110 whitespace-nowrap w-full md:w-auto text-center md:text-left py-2 md:py-0"
+          className="text-black font-serif text-sm md:text-base tracking-wide hover:opacity-70 transition-all duration-300 hover:scale-[1.03] whitespace-nowrap w-full md:w-auto text-center md:text-left py-2 md:py-0"
         >
           CONTACT US
         </button>

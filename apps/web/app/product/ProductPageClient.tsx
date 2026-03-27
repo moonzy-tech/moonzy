@@ -54,7 +54,7 @@ export default function ProductPageClient() {
           {/* Left — Images */}
           <div className="opacity-0 animate-fadeInUp" style={{ animationDelay: '100ms', animationFillMode: 'forwards' }}>
             <div
-              className="transition-all duration-500 hover:scale-105 hover:shadow-2xl"
+              className="transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl"
               style={{
                 backgroundColor: "#F5F0E8",
                 borderRadius: "18px",
@@ -74,7 +74,7 @@ export default function ProductPageClient() {
               {[0, 1].map((i) => (
                 <div
                   key={i}
-                  className="transition-all duration-300 hover:scale-110 hover:shadow-lg"
+                  className="transition-all duration-300 hover:scale-[1.05] hover:shadow-lg"
                   style={{
                     width: "80px",
                     height: "80px",
@@ -120,11 +120,11 @@ export default function ProductPageClient() {
                 <span style={{ flex: 1, textAlign: "center", fontFamily: "system-ui, sans-serif", color: "#1E2030", fontSize: "1.05rem", fontWeight: 600 }}>{quantity}</span>
                 <button type="button" onClick={() => setQuantity((q) => Math.min(10, q + 1))} style={{ width: "46px", height: "44px", borderRadius: "50%", border: "none", background: "transparent", color: "#1E2030", fontSize: "1.3rem", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 300 }}>+</button>
               </div>
-              <button type="button" onClick={handleAddToCart} className="transition-all duration-300 hover:scale-105 hover:shadow-xl" style={{ flex: 1, borderRadius: "999px", border: "none", backgroundColor: "#F5F0E8", color: "#1E2030", fontFamily: "'Instrument Sans', system-ui, sans-serif", fontSize: "0.85rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", height: "52px" }}>BUY NOW</button>
+              <button type="button" onClick={handleAddToCart} className="transition-all duration-300 hover:scale-[1.02] hover:shadow-xl" style={{ flex: 1, borderRadius: "999px", border: "none", backgroundColor: "#F5F0E8", color: "#1E2030", fontFamily: "'Instrument Sans', system-ui, sans-serif", fontSize: "0.85rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", height: "52px" }}>BUY NOW</button>
             </div>
 
             {/* Add to Cart */}
-            <button type="button" onClick={handleAddToCart} className="transition-all duration-300 hover:scale-125 hover:shadow-xl" style={{ width: "100%", padding: "16px 24px", borderRadius: "999px", border: "none", backgroundColor: "#D4A94C", color: "#1E2030", fontFamily: "'Instrument Sans', system-ui, sans-serif", fontSize: "0.85rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", height: "52px" }}>
+            <button type="button" onClick={handleAddToCart} className="transition-all duration-300 hover:scale-[1.02] hover:shadow-xl" style={{ width: "100%", padding: "16px 24px", borderRadius: "999px", border: "none", backgroundColor: "#D4A94C", color: "#1E2030", fontFamily: "'Instrument Sans', system-ui, sans-serif", fontSize: "0.85rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", height: "52px" }}>
               🛒 ADD TO CART
             </button>
 
@@ -177,7 +177,7 @@ export default function ProductPageClient() {
               Thoughtful answers about our ingredients, recipes, and processes—designed to give parents peace of mind at every step.
             </p>
 
-            <button className="transition-all duration-300 hover:scale-105 hover:shadow-xl hover:brightness-110" style={{ width: "100%", backgroundColor: "#D4A94C", color: "#2B2D3A", padding: "18px 40px", borderRadius: "999px", border: "none", fontFamily: "system-ui, -apple-system, sans-serif", fontSize: "0.9rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", cursor: "pointer", marginTop: "12px" }}>
+            <button className="transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:brightness-110" style={{ width: "100%", backgroundColor: "#D4A94C", color: "#2B2D3A", padding: "18px 40px", borderRadius: "999px", border: "none", fontFamily: "system-ui, -apple-system, sans-serif", fontSize: "0.9rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", cursor: "pointer", marginTop: "12px" }}>
               SHOOT A DIRECT
             </button>
           </div>
@@ -246,14 +246,14 @@ export default function ProductPageClient() {
         <div style={{ maxWidth: "1080px", margin: "0 auto", padding: "0 24px" }}>
           <div className="opacity-0 animate-fadeInUp" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "32px", animationDelay: '100ms', animationFillMode: 'forwards' }}>
             <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", color: "#F5F0E8", fontSize: "2rem", fontWeight: 500 }}>You may also like</h2>
-            <button className="transition-all duration-300 hover:scale-110 hover:bg-white hover:text-[#1E2030]" style={{ border: "1.5px solid rgba(200,195,185,0.2)", borderRadius: "999px", padding: "9px 24px", background: "transparent", color: "#F5F0E8", fontFamily: "'Instrument Sans', system-ui, sans-serif", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>VIEW ALL</button>
+            <button className="transition-all duration-300 hover:scale-[1.05] hover:bg-white hover:text-[#1E2030]" style={{ border: "1.5px solid rgba(200,195,185,0.2)", borderRadius: "999px", padding: "9px 24px", background: "transparent", color: "#F5F0E8", fontFamily: "'Instrument Sans', system-ui, sans-serif", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>VIEW ALL</button>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "20px" }}>
             {otherProducts.map((product, index) => (
               <Link key={product.id} href={`/product?flavor=${product.id}`} className="group" style={{ textDecoration: "none" }}>
-                <div className="opacity-0 animate-fadeInUp transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:-translate-y-2 hover:border-[#D4A94C]" style={{ border: "1px solid rgba(200,195,185,0.12)", borderRadius: "18px", padding: "12px", paddingBottom: "0", backgroundColor: "rgba(26,28,46,0.5)", animationDelay: `${300 + index * 150}ms`, animationFillMode: 'forwards' }}>
+                <div className="opacity-0 animate-fadeInUp transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl hover:-translate-y-1 hover:border-[#D4A94C]" style={{ border: "1px solid rgba(200,195,185,0.12)", borderRadius: "18px", padding: "12px", paddingBottom: "0", backgroundColor: "rgba(26,28,46,0.5)", animationDelay: `${300 + index * 150}ms`, animationFillMode: 'forwards' }}>
                   <div style={{ backgroundColor: product.accent, borderRadius: "12px", aspectRatio: "1 / 1.1", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden", position: "relative" }}>
-                    <div className="transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" style={{ position: "relative", width: "70%", height: "85%" }}>
+                    <div className="transition-transform duration-500 group-hover:scale-[1.05] group-hover:rotate-2" style={{ position: "relative", width: "70%", height: "85%" }}>
                       <Image src={product.image} alt={product.name} fill sizes="300px" style={{ objectFit: "contain" }} />
                     </div>
                   </div>

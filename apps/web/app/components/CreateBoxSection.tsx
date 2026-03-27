@@ -89,7 +89,7 @@ export default function CreateBoxSection() {
             }}
           >
             <button
-              className="w-full px-6 md:px-8 py-3 md:py-4 rounded-full border-none bg-[#15172a] text-[#F5F0E8] font-serif text-sm md:text-base font-semibold cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+              className="w-full px-6 md:px-8 py-3 md:py-4 rounded-full border-none bg-[#15172a] text-[#F5F0E8] font-serif text-sm md:text-base font-semibold cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl"
               style={{
                 letterSpacing: "0.02em",
               }}

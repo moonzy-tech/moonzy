@@ -146,7 +146,7 @@ export default function FeaturesSection() {
         {features.map((feature, index) => (
           <div
             key={index}
-            className="border border-[rgba(220,210,190,0.2)] rounded-2xl md:rounded-3xl lg:rounded-[20px] p-6 md:p-8 lg:p-[40px_32px_44px] text-center flex flex-col items-center transform transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:border-[rgba(220,210,190,0.4)] opacity-0 animate-fadeInUp"
+            className="border border-[rgba(220,210,190,0.2)] rounded-2xl md:rounded-3xl lg:rounded-[20px] p-6 md:p-8 lg:p-[40px_32px_44px] text-center flex flex-col items-center transform transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:border-[rgba(220,210,190,0.4)] opacity-0 animate-fadeInUp"
             style={{
               animationDelay: `${index * 150}ms`,
               animationFillMode: 'forwards'
