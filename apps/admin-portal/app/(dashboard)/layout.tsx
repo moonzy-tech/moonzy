@@ -8,6 +8,7 @@ import { api, type User } from "@/lib/api";
 const nav = [
   { href: "/", label: "Dashboard" },
   { href: "/products", label: "Products" },
+  { href: "/blogs", label: "Blogs" },
   { href: "/orders", label: "Orders" },
   { href: "/customers", label: "Customers" },
   { href: "/shipments", label: "Shipments" },

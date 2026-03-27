@@ -82,14 +82,14 @@ export default function CreateBoxSection() {
 
           {/* Button with gradient border */}
           <div
-            className="mt-8 md:mt-10 lg:mt-11 relative rounded-full p-[1.5px]"
+            className="mt-8 md:mt-10 lg:mt-11 relative rounded-full p-[1.5px] overflow-hidden transition-shadow duration-300 hover:shadow-[0_0_24px_rgba(155,89,182,0.35)]"
             style={{
               background:
                 "linear-gradient(90deg, #4A6CF7 0%, #9B59B6 40%, #E74C8A 70%, #F39C12 100%)",
             }}
           >
             <button
-              className="w-full px-6 md:px-8 py-3 md:py-4 rounded-full border-none bg-[#15172a] text-[#F5F0E8] font-serif text-sm md:text-base font-semibold cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl"
+              className="w-full px-6 md:px-8 py-3 md:py-4 rounded-full border-none bg-[#15172a] text-[#F5F0E8] font-serif text-sm md:text-base font-semibold cursor-pointer transition-all duration-300 hover:bg-[#171a30]"
               style={{
                 letterSpacing: "0.02em",
               }}
@@ -108,7 +108,7 @@ export default function CreateBoxSection() {
           }}
         >
           <img
-            src="/products/moonzy-box.png"
+            src="/moonzypromo.png"
             alt="Moonzy snack box with assorted millet puffs and chips"
             style={{
               width: "100%",

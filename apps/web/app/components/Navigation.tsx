@@ -131,6 +131,20 @@ export default function Navigation() {
         </button>
         <button
           type="button"
+          onClick={() => {
+            if (pathname === "/") {
+              router.push("/blog");
+            } else {
+              router.push("/blog");
+            }
+            setIsMenuOpen(false);
+          }}
+          className="text-black font-serif text-sm md:text-base tracking-wide hover:opacity-70 transition-all duration-300 hover:scale-[1.03] whitespace-nowrap w-full md:w-auto text-center md:text-left py-2 md:py-0"
+        >
+          JOURNAL
+        </button>
+        <button
+          type="button"
           onClick={() => handleNavClick("about")}
           className="text-black font-serif text-sm md:text-base tracking-wide hover:opacity-70 transition-all duration-300 hover:scale-[1.03] whitespace-nowrap w-full md:w-auto text-center md:text-left py-2 md:py-0"
         >

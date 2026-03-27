@@ -2,6 +2,7 @@ export { connectDB, disconnectDB, mongoose } from "./connection.js";
 export {
   User,
   Product,
+  Blog,
   Order,
   Payment,
   Shipment,
@@ -13,6 +14,9 @@ export {
   type IProduct,
   type IProductDocument,
   type IProductModel,
+  type IBlog,
+  type IBlogDocument,
+  type IBlogModel,
   type IAddress,
   type IOrder,
   type IOrderDocument,

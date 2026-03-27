@@ -63,6 +63,21 @@ export type Product = {
   sortOrder: number;
 };
 
+export type Blog = {
+  _id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  coverImageUrl: string;
+  markdownBody: string;
+  author: string;
+  publishDate: string;
+  isPublished: boolean;
+  sortOrder: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type Order = {
   _id: string;
   orderNumber: string;

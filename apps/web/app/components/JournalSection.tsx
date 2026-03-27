@@ -1,92 +1,88 @@
 "use client";
 
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { api } from "@/lib/api";
+
+type BlogPost = {
+  _id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  coverImageUrl: string;
+  author: string;
+  publishDate: string;
+};
+
+function formatDate(value: string) {
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return "";
+  return d.toLocaleDateString("en-IN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+}
+
 export default function JournalSection() {
-  const posts = [
-    {
-      title: "Midnight Coffee With Myself",
-      emoji: "☕",
-      author: "Amber Gibson",
-      date: "Dec 31, 2025",
-      image: "/blog/coffee.jpg",
-    },
-    {
-      title: "Midnight Sweet Cravings",
-      emoji: "🍦",
-      author: "Amber Gibson",
-      date: "Dec 31, 2025",
-      image: "/blog/sweet.jpg",
-    },
-    {
-      title: "Night Owl",
-      emoji: "🦉",
-      author: "Amber Gibson",
-      date: "Dec 31, 2025",
-      image: "/blog/owl.jpg",
-    },
-  ];
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+
+  useEffect(() => {
+    api<BlogPost[]>("/blogs")
+      .then((blogs) => setPosts(blogs))
+      .catch(() => setPosts([]));
+  }, []);
 
   return (
-    <section id="blogs" className="bg-[#141826] py-12 md:py-16 lg:py-18 xl:py-20">
+    <section
+      id="blogs"
+      className="bg-[#141826] py-12 md:py-16 lg:py-18 xl:py-20"
+    >
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-12">
         {/* Header Row */}
-        <div
-          className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 md:mb-10 lg:mb-9"
-        >
-          <h2
-            className="font-serif text-[#F5F0E8] text-2xl sm:text-3xl md:text-4xl lg:text-[2.8rem] font-bold tracking-wide"
-          >
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 md:mb-10 lg:mb-9">
+          <h2 className="font-serif text-[#F5F0E8] text-2xl sm:text-3xl md:text-4xl lg:text-[2.8rem] font-bold tracking-wide">
             From the Moonzy Journal
           </h2>
 
           {/* See More - Gradient border button */}
-          <div
-            className="rounded-full p-[1.5px]"
+          <Link
+            href="/blog"
+            className="rounded-full p-[1.5px] overflow-hidden transition-shadow duration-300 hover:shadow-[0_0_24px_rgba(155,89,182,0.35)]"
             style={{
               background:
                 "linear-gradient(90deg, #4A6CF7 0%, #9B59B6 40%, #E74C8A 70%, #F39C12 100%)",
             }}
           >
-            <button
-              className="bg-[#15172a] text-[#F5F0E8] px-6 md:px-8 py-2 md:py-2.5 rounded-full text-sm md:text-[0.95rem] font-serif font-semibold cursor-pointer border-none transition-all duration-300 hover:scale-[1.03] hover:shadow-xl"
+            <span
+              className="block bg-[#15172a] text-[#F5F0E8] px-6 md:px-8 py-2 md:py-2.5 rounded-full text-sm md:text-[0.95rem] font-serif font-semibold transition-all duration-300 hover:bg-[#171a30]"
               style={{
                 letterSpacing: "0.02em",
               }}
             >
               See More
-            </button>
-          </div>
+            </span>
+          </Link>
         </div>
 
         {/* Blog Posts Grid */}
-        <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5"
-        >
-          {posts.map((post, index) => (
-            <div
-              key={index}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+          {posts.slice(0, 3).map((post, index) => (
+            <Link
+              href={`/blog/${post.slug}`}
+              key={post._id}
               className="rounded-2xl md:rounded-3xl lg:rounded-[20px] overflow-hidden cursor-pointer relative bg-[#1E2235] transform transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:-translate-y-1 opacity-0 animate-fadeInUp"
               style={{
                 animationDelay: `${index * 200}ms`,
-                animationFillMode: 'forwards'
+                animationFillMode: "forwards",
               }}
             >
-              {/* Image Area */}
-              <div
-                style={{
-                  aspectRatio: "1 / 1",
-                  overflow: "hidden",
-                  position: "relative",
-                }}
-              >
+              {/* Image Area — reduced from 1:1 to 4:3 */}
+              <div className="relative overflow-hidden" style={{ aspectRatio: "4 / 3" }}>
                 <img
-                  src={post.image}
+                  src={post.coverImageUrl}
                   alt={post.title}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    display: "block",
-                  }}
+                  className="w-full h-full object-cover block"
                   onError={(e) => {
                     e.currentTarget.style.display = "none";
                     if (e.currentTarget.nextElementSibling) {
@@ -98,121 +94,92 @@ export default function JournalSection() {
                 />
                 {/* Fallback */}
                 <div
+                  className="hidden absolute inset-0 items-center justify-center flex-col gap-2"
                   style={{
-                    display: "none",
-                    width: "100%",
-                    height: "100%",
-                    position: "absolute",
-                    inset: 0,
                     background:
                       index === 0
                         ? "linear-gradient(145deg, #3d2b1f 0%, #1a1208 100%)"
                         : index === 1
                         ? "linear-gradient(145deg, #2c3e50 0%, #1a252f 100%)"
                         : "linear-gradient(145deg, #1a4a7a 0%, #0a2a4a 100%)",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                    gap: "8px",
                   }}
                 >
-                  <span style={{ fontSize: "2.5rem" }}>{post.emoji}</span>
-                  <span
-                    style={{
-                      color: "rgba(255,255,255,0.3)",
-                      fontSize: "0.7rem",
-                    }}
-                  >
+                  <span className="text-[2.5rem]">📝</span>
+                  <span className="text-white/30 text-[0.7rem]">
                     Blog Image
                   </span>
                 </div>
               </div>
 
-              {/* Dashed Separator with WHITE Perforation Circles */}
-              <div
-                style={{
-                  position: "relative",
-                  height: "0px",
-                }}
-              >
-                {/* Dashed line */}
+              {/* Dashed Separator with Perforation Notches */}
+              <div className="relative h-0">
+                {/* Dashed line — sits exactly on the image/card-body seam */}
+                <svg
+                  className="absolute left-0 right-0 w-full"
+                  height="2"
+                  style={{ top: "0px" }}
+                >
+                  <line
+                    x1="0"
+                    y1="1"
+                    x2="100%"
+                    y2="1"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeDasharray="12 8"
+                    strokeLinecap="square"
+                  />
+                </svg>
+                {/* Left notch — white perforation */}
                 <div
+                  className="absolute"
                   style={{
-                    position: "absolute",
-                    top: "0",
-                    left: "20px",
-                    right: "20px",
-                    borderTop: "2.5px dashed rgba(245, 240, 232, 0.35)",
-                  }}
-                />
-                {/* Left white circle notch - 10x24 from Figma */}
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "-12px",
+                    top: "-10px",
                     left: "-5px",
                     width: "10px",
-                    height: "24px",
-                    borderRadius: "0 12px 12px 0",
+                    height: "20px",
+                    borderRadius: "0 10px 10px 0",
                     backgroundColor: "#F5F0E8",
                   }}
                 />
-                {/* Right white circle notch - 10x24 from Figma */}
+                {/* Right notch — white perforation */}
                 <div
+                  className="absolute"
                   style={{
-                    position: "absolute",
-                    top: "-12px",
+                    top: "-10px",
                     right: "-5px",
                     width: "10px",
-                    height: "24px",
-                    borderRadius: "12px 0 0 12px",
+                    height: "20px",
+                    borderRadius: "10px 0 0 10px",
                     backgroundColor: "#F5F0E8",
                   }}
                 />
               </div>
 
               {/* Text Info Area */}
-              <div
-                className="p-6 md:p-7 pb-7 md:pb-8 bg-[#1E2235]"
-              >
+              <div className="p-5 md:p-6 pb-6 md:pb-7 bg-[#1E2235]">
                 {/* Title */}
-                <h3
-                  className="font-serif text-[#F5F0E8] text-lg md:text-xl lg:text-2xl font-medium mb-3 md:mb-4 leading-tight italic"
-                >
-                  {post.title} {post.emoji}
+                <h3 className="font-serif text-[#F5F0E8] text-base md:text-lg lg:text-xl font-medium mb-2.5 md:mb-3 leading-tight italic">
+                  {post.title}
                 </h3>
 
                 {/* Author & Date Row */}
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "24px",
-                  }}
-                >
+                <div className="flex items-center gap-5">
                   {/* Author */}
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "10px",
-                    }}
-                  >
-                    {/* Avatar - rounded square */}
+                  <div className="flex items-center gap-2.5">
                     <div
+                      className="shrink-0 overflow-hidden"
                       style={{
-                        width: "28px",
-                        height: "28px",
-                        borderRadius: "7px",
+                        width: "24px",
+                        height: "24px",
+                        borderRadius: "6px",
                         background:
                           "linear-gradient(135deg, #8899aa, #667788)",
-                        overflow: "hidden",
-                        flexShrink: 0,
                       }}
                     >
                       <svg
-                        width="28"
-                        height="28"
+                        width="24"
+                        height="24"
                         viewBox="0 0 28 28"
                         fill="rgba(255,255,255,0.6)"
                       >
@@ -221,11 +188,9 @@ export default function JournalSection() {
                       </svg>
                     </div>
                     <span
+                      className="text-[rgba(200,195,185,0.65)] text-[0.8rem] font-medium"
                       style={{
-                        color: "rgba(200, 195, 185, 0.65)",
-                        fontSize: "0.9rem",
                         fontFamily: "system-ui, -apple-system, sans-serif",
-                        fontWeight: 500,
                       }}
                     >
                       {post.author}
@@ -233,17 +198,10 @@ export default function JournalSection() {
                   </div>
 
                   {/* Date */}
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                    }}
-                  >
-                    {/* Calendar icon */}
+                  <div className="flex items-center gap-2">
                     <svg
-                      width="16"
-                      height="16"
+                      width="14"
+                      height="14"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="rgba(200, 195, 185, 0.55)"
@@ -260,19 +218,17 @@ export default function JournalSection() {
                       />
                     </svg>
                     <span
+                      className="text-[rgba(200,195,185,0.65)] text-[0.8rem] font-medium"
                       style={{
-                        color: "rgba(200, 195, 185, 0.65)",
-                        fontSize: "0.9rem",
                         fontFamily: "system-ui, -apple-system, sans-serif",
-                        fontWeight: 500,
                       }}
                     >
-                      {post.date}
+                      {formatDate(post.publishDate)}
                     </span>
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
