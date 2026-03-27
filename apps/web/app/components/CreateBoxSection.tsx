@@ -1,6 +1,9 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 export default function CreateBoxSection() {
+  const router = useRouter();
   const steps = [
     { num: 1, text: "Choose Your Favorites" },
     { num: 2, text: "Mix & Match Freely" },
@@ -89,6 +92,8 @@ export default function CreateBoxSection() {
             }}
           >
             <button
+              type="button"
+              onClick={() => router.push("/product")}
               className="w-full px-6 md:px-8 py-3 md:py-4 rounded-full border-none bg-[#15172a] text-[#F5F0E8] font-serif text-sm md:text-base font-semibold cursor-pointer transition-all duration-300 hover:bg-[#171a30]"
               style={{
                 letterSpacing: "0.02em",

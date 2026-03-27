@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { getCart, getCartCount, subscribeToCartChanges } from "@/lib/cart";
 import { useAuth } from "@/lib/auth";
@@ -80,23 +82,56 @@ export default function Navigation() {
   return (
     <>
     <nav
-      className={`sticky top-2 z-50 bg-[#F5F5F0] rounded-[24px] md:rounded-[32px] mx-auto mt-3 md:mt-[13px] px-4 md:px-8 lg:px-12 h-auto md:h-[75px] py-4 md:py-0 flex flex-col md:flex-row items-center md:justify-end box-border transition-[width,max-width,box-shadow] duration-300 ease-out ${
+      className={`sticky top-2 z-50 bg-[#F5F5F0] rounded-[24px] md:rounded-[32px] mx-auto mt-3 md:mt-[13px] px-4 md:px-8 lg:px-12 h-auto md:h-[75px] py-4 md:py-0 flex flex-col md:flex-row md:items-center md:justify-between box-border transition-[width,max-width,box-shadow] duration-300 ease-out ${
         isScrolled
           ? "w-[calc(100%-4rem)] md:w-[calc(100%-8rem)] lg:w-[calc(100%-12rem)] max-w-[1100px] shadow-2xl"
           : "w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] lg:w-[calc(100%-4rem)] max-w-[1397px] shadow-sm"
       }`}
     >
-      {/* ── Mobile top bar: Hamburger ←→ (Login + Cart) ── */}
-      <div className="w-full md:hidden flex items-center justify-between">
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="flex flex-col gap-1 p-2"
-          aria-label="Toggle menu"
-        >
-          <div className={`w-6 h-0.5 bg-black transition-all duration-300 ${isMenuOpen ? "rotate-45 translate-y-1.5" : ""}`} />
-          <div className={`w-6 h-0.5 bg-black transition-all duration-300 ${isMenuOpen ? "opacity-0" : ""}`} />
-          <div className={`w-6 h-0.5 bg-black transition-all duration-300 ${isMenuOpen ? "-rotate-45 -translate-y-1.5" : ""}`} />
-        </button>
+      {/* Logo — desktop, left */}
+      <Link
+        href="/"
+        className="hidden shrink-0 items-center outline-none transition hover:opacity-85 focus-visible:ring-2 focus-visible:ring-black/20 md:flex md:mr-6 lg:mr-10"
+        aria-label="Moonzy home"
+      >
+        <Image
+          src="/logo.png"
+          alt="Moonzy"
+          width={128}
+          height={40}
+          className="h-8 w-auto md:h-9"
+          priority
+        />
+      </Link>
+
+      {/* ── Mobile top bar: Logo + Hamburger ←→ (Login + Cart) ── */}
+      <div className="flex w-full items-center justify-between md:hidden">
+        <div className="flex items-center gap-1">
+          <Link
+            href="/"
+            className="flex shrink-0 items-center pr-1 outline-none transition hover:opacity-85 focus-visible:ring-2 focus-visible:ring-black/20"
+            aria-label="Moonzy home"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            <Image
+              src="/logo.png"
+              alt="Moonzy"
+              width={120}
+              height={36}
+              className="h-7 w-auto"
+              priority
+            />
+          </Link>
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="flex flex-col gap-1 p-2"
+            aria-label="Toggle menu"
+          >
+            <div className={`w-6 h-0.5 bg-black transition-all duration-300 ${isMenuOpen ? "rotate-45 translate-y-1.5" : ""}`} />
+            <div className={`w-6 h-0.5 bg-black transition-all duration-300 ${isMenuOpen ? "opacity-0" : ""}`} />
+            <div className={`w-6 h-0.5 bg-black transition-all duration-300 ${isMenuOpen ? "-rotate-45 -translate-y-1.5" : ""}`} />
+          </button>
+        </div>
 
         {/* Login / Avatar + Cart — always grouped together on mobile */}
         <div className="flex items-center gap-2.5">
@@ -158,8 +193,8 @@ export default function Navigation() {
 
       {/* ── Nav links (collapsible on mobile, always visible on desktop) ── */}
       <div
-        className={`w-full md:w-auto flex flex-col md:flex-row items-center gap-3 sm:gap-4 md:gap-6 lg:gap-8 overflow-hidden md:overflow-visible transition-all duration-500 ease-in-out ${
-          isMenuOpen ? "max-h-96 opacity-100 mt-4" : "max-h-0 opacity-0 md:max-h-none md:opacity-100 md:mt-0"
+        className={`flex w-full flex-col items-center gap-3 overflow-hidden transition-all duration-500 ease-in-out sm:gap-4 md:mt-0 md:min-h-0 md:flex-1 md:flex-row md:justify-end md:gap-6 md:overflow-visible lg:gap-8 ${
+          isMenuOpen ? "max-h-96 opacity-100 mt-4" : "max-h-0 opacity-0 md:max-h-none md:opacity-100"
         }`}
       >
         <button type="button" onClick={() => handleNavClick("home")} className="text-black font-serif text-sm md:text-base tracking-wide hover:opacity-70 transition-all duration-300 hover:scale-[1.03] whitespace-nowrap w-full md:w-auto text-center md:text-left py-2 md:py-0">HOME</button>
