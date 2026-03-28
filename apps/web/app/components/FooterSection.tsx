@@ -3,7 +3,7 @@ export default function FooterSection() {
     <footer id="contact" className="bg-[#1D2235] pt-8 pb-10 lg:pt-16">
       <div className="mx-auto max-w-[1200px] px-6 md:px-10 lg:px-12">
         {/* Top Links Grid */}
-        <div className="mb-10 grid grid-cols-2 gap-5 sm:mb-12 sm:gap-8 lg:mb-16 lg:grid-cols-4 lg:gap-16">
+        <div className="text-center md:text-left mb-10 grid grid-cols-2 gap-5 sm:mb-12 sm:gap-8 lg:mb-16 lg:grid-cols-4 lg:gap-51">
           {/* Contact Info */}
           <div className="flex flex-col gap-3">
             <p className="text-[rgba(200,195,185,0.55)] text-xs sm:text-sm leading-relaxed font-[system-ui]">
@@ -64,7 +64,7 @@ export default function FooterSection() {
         {/* MOONZY Logo */}
         <div className="text-center mb-10 sm:mb-12 md:mb-16">
           <h1
-            className="font-serif text-white font-bold tracking-[0.18em] sm:tracking-[0.25em] md:tracking-[0.45em] leading-none"
+            className="font-serif text-white font-extrabold tracking-[0.18em] sm:tracking-[0.25em] md:tracking-[0.45em] leading-none"
             style={{ fontSize: "clamp(3rem, 11vw, 11rem)" }}
           >
             MOONZY
@@ -74,7 +74,7 @@ export default function FooterSection() {
         {/* Bottom Bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-center sm:text-left text-[rgba(200,195,185,0.4)] text-xs font-bold tracking-wider uppercase font-[system-ui]">
-            © 2025 Crafted & Designed by <span className="text-[rgba(245,240,232,0.7)]">NXSON</span>
+            © 2025 Crafted & Designed by <span className="text-[rgba(245,240,232,0.7)]">KARAN</span>
           </p>
           <div className="flex flex-wrap items-center justify-center sm:justify-end gap-4 sm:gap-8">
             {["TWITTER", "INSTAGRAM", "TIKTOK"].map((social) => (
