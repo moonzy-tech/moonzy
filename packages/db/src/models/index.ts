@@ -1,5 +1,13 @@
 export { User, type IUser, type IUserDocument, type IUserModel, type UserRole } from "./user.model.js";
 export { Product, type IProduct, type IProductDocument, type IProductModel } from "./product.model.js";
+export { Blog, type IBlog, type IBlogDocument, type IBlogModel } from "./blog.model.js";
+export {
+  ContactMessage,
+  type IContactMessage,
+  type IContactMessageDocument,
+  type IContactMessageModel,
+  type ContactStatus,
+} from "./contact.model.js";
 export { addressSchema, type IAddress } from "./address.model.js";
 export {
   Order,

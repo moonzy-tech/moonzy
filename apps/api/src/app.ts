@@ -5,10 +5,12 @@ import { loadSession } from "./middleware/session.js";
 import { authRouter } from "./routes/auth.js";
 import { healthRouter } from "./routes/health.js";
 import { productsRouter } from "./routes/products.js";
+import { blogsRouter } from "./routes/blogs.js";
 import { ordersRouter } from "./routes/orders.js";
 import { paymentsRouter, handleRazorpayWebhook } from "./routes/payments.js";
 import { adminRouter } from "./routes/admin/index.js";
 import { profileRouter } from "./routes/profile.js";
+import { contactRouter } from "./routes/contact.js";
 
 const app = express();
 
@@ -45,8 +47,10 @@ app.use("/health", healthRouter);
 app.use("/auth", authRouter);
 app.use("/profile", profileRouter);
 app.use("/products", productsRouter);
+app.use("/blogs", blogsRouter);
 app.use("/orders", ordersRouter);
 app.use("/payments", paymentsRouter);
+app.use("/contact", contactRouter);
 app.use("/admin", adminRouter);
 
 export { app };

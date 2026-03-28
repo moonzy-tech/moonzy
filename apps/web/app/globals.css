@@ -4,6 +4,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
+
 @font-face {
   font-family: "Berlin Sans";
   src: url("/fonts/BRLNSR.TTF") format("truetype");
@@ -24,11 +25,16 @@
   --color-background: #E9D5DA;
   --color-foreground: #ffffff;
   --font-berlin: "Berlin Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   font-family: "Berlin Sans", ui-sans-serif, system-ui, sans-serif;
-  background-color: #defee4; /* match first hero panel so no white strip below navbar */
+  background-color: #141826; /* dark background for new design */
 }
 
 @theme inline {
@@ -200,4 +206,162 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   transition: opacity 1000ms ease-in-out;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.8s ease-out;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.6s ease-out;
+}
+
+/* Hero footer: infinite horizontal marquee (duplicate content; translate -50%) */
+@keyframes hero-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.hero-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: hero-marquee 32s linear infinite;
+  will-change: transform;
+}
+
+/* Soft fade at horizontal ends so ticker doesn’t cut off harshly */
+.hero-marquee-fade-x {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 1.25rem,
+    #000 calc(100% - 1.25rem),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 1.25rem,
+    #000 calc(100% - 1.25rem),
+    transparent 100%
+  );
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+}
+
+@media (min-width: 768px) {
+  .hero-marquee-fade-x {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 2rem,
+      #000 calc(100% - 2rem),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 2rem,
+      #000 calc(100% - 2rem),
+      transparent 100%
+    );
+  }
+}
+
+/* Left fade spans the wave SVG (~94px) + buffer so type dissolves before the curved clip */
+.hero-marquee-fade-x-curve {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 clamp(6.5rem, 18vw, 11.5rem),
+    #000 calc(100% - 2.75rem),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 clamp(6.5rem, 18vw, 11.5rem),
+    #000 calc(100% - 2.75rem),
+    transparent 100%
+  );
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+}
+
+@media (min-width: 1024px) {
+  .hero-marquee-fade-x-curve {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 clamp(7.5rem, 14vw, 15rem),
+      #000 calc(100% - 3.25rem),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 clamp(7.5rem, 14vw, 15rem),
+      #000 calc(100% - 3.25rem),
+      transparent 100%
+    );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-marquee-track {
+    animation: none;
+  }
 }
